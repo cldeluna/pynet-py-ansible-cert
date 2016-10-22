@@ -107,7 +107,7 @@ def main():
 # Standard call to the main() function.
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print '\nUsage: c1-6-yml-json-w.py <what are the argumentsr>\nExample: python c1-6-yml-json-w.py "arguments"\n\n'
+        print '\nUsage: c1-6-yml-json-w.py <file name of cisco config file with vlan information>\nExample: python c1-6-yml-json-w.py "sin-dist-shrunonly.txt"\n\n'
         sys.exit()
     else:
         main()

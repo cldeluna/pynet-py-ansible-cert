@@ -21,8 +21,14 @@ w1-06-yml-json-w.py
 This scripts takes in one argument, a cisco based configuration file with vlan information.  Using CiscoConfigParse, the file is parsed and the vlan parent child information is extracted.  The resulting elements are split using a space as a delimiter and elements 0 and 1 are used as key and value pairs respectively to generate a list of dictionaries.  The resulting data structures are saved in YAML and JSON formatted files.  The stdout output shows each element alont with the element type and the number of elements.
 
 ```
-(applied_python)[cdeluna@ip-172-30-0-4 scratch]$ ls week1*
-ls: cannot access week1*: No such file or directory
+
+Claudia@Mac-mini:~/Dropbox (Indigo Wire Networks)/scripts/python/2016/PyNetACert/week1$ python w1-06-yml-json-w.py 
+
+Usage: c1-6-yml-json-w.py <file name of cisco config file with vlan information>
+Example: python c1-6-yml-json-w.py "sin-dist-shrunonly.txt"
+
+
+
 (applied_python)[cdeluna@ip-172-30-0-4 scratch]$ python w1-06-yml-json-w.py sin-dist-shrunonly.txt 
 
 
