@@ -18,17 +18,17 @@ http://www.opensource.org/licenses/gpl-2.0.php and
 http://opensource.org/licenses/gpl-3.0.html and
 http://www.opensource.org/licenses/lgpl-2.1.php and
 http://www.gnu.org/licenses/old-licenses/library.txt.
-sin1-nag1# show run | i dot1x
-sin1-nag1# !!!!!Global Test commands!!!!!!!!!!!!!!!!!!!!!
-sin1-nag1# !!!Run these commands on all switches !!!!!!!!
-sin1-nag1# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-sin1-nag1# sh clock
+sin1-dist1# show run | i dot1x
+sin1-dist1# !!!!!Global Test commands!!!!!!!!!!!!!!!!!!!!!
+sin1-dist1# !!!Run these commands on all switches !!!!!!!!
+sin1-dist1# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+sin1-dist1# sh clock
 
 19:00:42.871 UTC Tue Apr 19 2016
-sin1-nag1# 
-sin1-nag1# terminal length 0
-sin1-nag1# !
-sin1-nag1# Show running-config
+sin1-dist1# 
+sin1-dist1# terminal length 0
+sin1-dist1# !
+sin1-dist1# Show running-config
 show version
 !
 show inventory
@@ -66,7 +66,7 @@ show interface trunk
 version 7.0(3)I2(2b)
 snmp-server system-shutdown
 
-hostname sin1-nag1
+hostname sin1-dist1
 policy-map type network-qos DC_NQ_POLICY
   class type network-qos c-nq3
     mtu 1500
@@ -76,7 +76,7 @@ policy-map type network-qos DC_NQ_POLICY
     mtu 9216
   class type network-qos c-nq-default
     mtu 9216
-vdc sin1-nag1 id 1
+vdc sin1-dist1 id 1
   limit-resource vlan minimum 16 maximum 4094
   limit-resource vrf minimum 2 maximum 4096
   limit-resource port-channel minimum 0 maximum 511
@@ -117,36 +117,36 @@ You must have explicit permission to access or configure this device.  All activ
 
 no ip domain-lookup
 ip domain-name indigowire.net
-ip name-server 172.19.10.11 10.184.101.11
-radius-server host 10.63.101.20 auth-port 1814 acct-port 1815 authentication accounting timeout 3 retransmit 2 
-radius-server host 10.120.101.20 auth-port 1814 acct-port 1815 authentication accounting timeout 3 retransmit 2 
-radius-server host 10.1.10.26 auth-port 1814 acct-port 1815 authentication accounting timeout 3 retransmit 2 
+ip name-server 192.0.192.11 192.0.192.12
+radius-server host 192.3.192.20 auth-port 1814 acct-port 1815 authentication accounting timeout 3 retransmit 2 
+radius-server host 192.12.192.20 auth-port 1814 acct-port 1815 authentication accounting timeout 3 retransmit 2 
+radius-server host 192.1.192.26 auth-port 1814 acct-port 1815 authentication accounting timeout 3 retransmit 2 
 aaa group server radius IWN-USERS 
-    server 10.63.101.20 
-    server 10.120.101.20 
-    server 10.1.10.26 
+    server 192.63.192.20 
+    server 192.120.192.20 
+    server 192.1.192.26 
 aaa group server radius IWN-NETADMINS 
-    server 10.63.101.20 
-    server 10.120.101.20 
-    server 10.1.10.26 
+    server 192.63.192.20 
+    server 192.120.192.20 
+    server 192.1.192.26 
 feature password encryption aes
 system default switchport shutdown
 logging event trunk-status default
 errdisable recovery interval 600
 ip access-list 95
-  10 remark SNMP Security Lock
+  192.remark SNMP Security Lock
   20 deny ip any any 
 ip access-list DROP_ALL
-  10 remark utility ACL to block everything
+  192.remark utility ACL to block everything
   20 deny ip any any 
 ip access-list SNMP_ACL
-  10 permit ip 10.63.103.2/32 any 
-  20 permit ip 10.1.0.119/32 any 
-  30 permit ip 172.19.3.0/24 any 
+  192.permit ip 192.63.192.2/32 any 
+  20 permit ip 192.1.0.119/32 any 
+  30 permit ip 192.0.3.0/24 any 
 ip access-list VTY-ACL
-  10 permit tcp 172.19.0.0/18 any eq 22 
+  192.permit tcp 192.0.0.0/18 any eq 22 
 ip access-list vty-access
-  10 permit tcp any any eq 22 
+  192.permit tcp any any eq 22 
   20 permit tcp any any eq cmd 
   30 deny ip any any log 
 class-map type qos match-any DC-VIDEO
@@ -185,10 +185,10 @@ system qos
 copp profile strict
 bfd startup-timer 0
 snmp-server contact noc@IWN.com
-snmp-server location sin1-105
+snmp-server location sin1-192.
 snmp-server source-interface trap loopback0
-snmp-server user admin network-admin auth md5 0x03182aa66590751cb4e642594b2f8f09 priv 0x03182aa66590751cb4e642594b2f8f09 localizedkey
-snmp-server host 10.1.1.1 traps version 2c 34K+Cities
+snmp-server user admin network-admin auth md5 0x03182aa6659 priv 0x03182aa66 localizedkey
+snmp-server host 192.1.1.1 traps version 2c 34K+Cities
 rmon event 1 log trap public description FATAL(1) owner PMON@FATAL
 rmon event 2 log trap public description CRITICAL(2) owner PMON@CRITICAL
 rmon event 3 log trap public description ERROR(3) owner PMON@ERROR
@@ -220,29 +220,29 @@ snmp-server community 190+Countries group network-operator
 snmp-server community 34K+Cities group network-admin
 snmp-server community 190+Countries use-acl SNMP_ACL
 snmp-server community 34K+Cities use-acl SNMP_ACL
-ntp server 10.184.101.11
-ntp server 172.19.10.11
+ntp server 192.0.192..11
+ntp server 192.0.192.11
 ntp source-interface  loopback0
 ntp logging
 
-vlan 1,3,101,103-106,300,310,340,350,500,560-564,570-574,581,585,590-591
+vlan 1,3,192.,192.-192.,300,3192.340,350,500,560-564,570-574,581,585,590-591
 show interface description
 vlan 3
   name sin1-default
-vlan 101
-  name sin1-nvn-core-101
-vlan 103
-  name sin1-nvn-monitor-103
-vlan 104
-  name sin1-gvn-mgmt-104
-vlan 105
-  name sin1-gvn-vmotion-mgmt-105
-vlan 106
-  name sin1-nvn-sec-106
+vlan 192.
+  name sin1-nvn-core-192.
+vlan 192.
+  name sin1-nvn-monitor-192.
+vlan 192.
+  name sin1-gvn-mgmt-192.
+vlan 192.
+  name sin1-gvn-vmotion-mgmt-192.
+vlan 192.
+  name sin1-nvn-sec-192.
 vlan 300
   name sin1-uc-vn-300
 vlan 310
-  name sin1-uc-vn-310-dmz
+  name sin1-uc-vn-3192.dmz
 vlan 340
   name sin1-uc-vn-vmotion-340
 vlan 350
@@ -280,7 +280,7 @@ vlan 591
 
 spanning-tree vlan 1-3967 priority 4096
 ip prefix-list DIRECTCONNECT seq 5 deny 1.1.1.0/30 
-ip prefix-list DIRECTCONNECT seq 10 permit 0.0.0.0/0 le 32 
+ip prefix-list DIRECTCONNECT seq 192.permit 0.0.0.0/0 le 32 
 route-map DIRECTCONNECT_INTO_BGP permit 10
   match ip address prefix-list DIRECTCONNECT 
 route-map SET-HIGH-LOCAL-PREF permit 10
@@ -293,7 +293,7 @@ service dhcp
 ip dhcp relay
 ipv6 dhcp relay
 vrf context management
-  ip route 0.0.0.0/0 172.19.3.1
+  ip route 0.0.0.0/0 192.0.3.1
 vrf context vpc-peer-keepalive
 hardware access-list tcam region ifacl 0
 hardware access-list tcam region vacl 0
@@ -301,7 +301,7 @@ hardware access-list tcam region l3qos 512
 hardware qos ns-buffer-profile mesh
 vpc domain 2
   peer-switch
-  role priority 100
+  role priority 192.
   system-priority 5000
   peer-keepalive destination 1.1.1.2 source 1.1.1.1 vrf vpc-peer-keepalive
   delay restore 15
@@ -315,328 +315,328 @@ interface Vlan1
   no ip redirects
   no ipv6 redirects
 
-interface Vlan101
-  description nvn-core-101
+interface Vlan192.
+  description nvn-core-192.
   no shutdown
   no ip redirects
-  ip address 172.19.10.2/26
+  ip address 192.0.192.2/26
   no ipv6 redirects
   hsrp version 2
-  hsrp 101 
+  hsrp 192. 
     preempt 
     priority 110
-    ip 172.19.10.1
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.192.1
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
-interface Vlan103
-  description nvn-monitor-103
+interface Vlan192.
+  description nvn-monitor-192.
   no shutdown
   no ip redirects
-  ip address 172.19.10.66/27
+  ip address 192.0.192.66/27
   no ipv6 redirects
   hsrp version 2
-  hsrp 103 
+  hsrp 192. 
     preempt 
     priority 110
-    ip 172.19.10.65
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.192.65
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
-interface Vlan104
-  description gvn-mgmt-104
+interface Vlan192.
+  description gvn-mgmt-192.
   no shutdown
   no ip redirects
-  ip address 172.19.4.2/24
+  ip address 192.0.4.2/24
   no ipv6 redirects
   hsrp version 2
-  hsrp 104 
+  hsrp 192. 
     preempt 
     priority 110
-    ip 172.19.4.1
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.4.1
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
-interface Vlan105
-  description gvn-vmotion-mgmt-105
+interface Vlan192.
+  description gvn-vmotion-mgmt-192.
   no shutdown
   no ip redirects
-  ip address 172.19.10.98/27
+  ip address 192.0.192.98/27
   no ipv6 redirects
   hsrp version 2
-  hsrp 105 
+  hsrp 192. 
     preempt 
     priority 110
-    ip 172.19.10.97
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.192.97
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
-interface Vlan106
-  description nvn-sec-106
+interface Vlan192.
+  description nvn-sec-192.
   no shutdown
   no ip redirects
-  ip address 172.19.10.130/27
+  ip address 192.0.192.130/27
   no ipv6 redirects
   hsrp version 2
-  hsrp 106 
+  hsrp 192. 
     preempt 
     priority 110
-    ip 172.19.10.129
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.192.129
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan300
   description uc-vn-300
   no shutdown
   no ip redirects
-  ip address 172.19.32.2/26
+  ip address 192.0.32.2/26
   no ipv6 redirects
   hsrp version 2
   hsrp 300 
     preempt 
     priority 110
-    ip 172.19.32.1
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.32.1
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan340
   description uc-vn-vmotion-340
   no shutdown
   no ip redirects
-  ip address 172.19.32.66/27
+  ip address 192.0.32.66/27
   no ipv6 redirects
   hsrp version 2
   hsrp 340 
     preempt 
     priority 110
-    ip 172.19.32.65
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.32.65
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan350
   description uc-vn-350
   no shutdown
   no ip redirects
-  ip address 172.19.32.130/26
+  ip address 192.0.32.130/26
   no ipv6 redirects
   hsrp version 2
   hsrp 350 
     preempt 
     priority 110
-    ip 172.19.32.129
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.32.129
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan500
   description avn-airsupport-500
   no shutdown
   no ip redirects
-  ip address 172.19.50.2/27
+  ip address 192.0.50.2/27
   no ipv6 redirects
   hsrp version 2
   hsrp 500 
     preempt 
     priority 110
-    ip 172.19.50.1
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.50.1
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan560
   description gvn-gtlib-pd-560
   no shutdown
   no ip redirects
-  ip address 172.19.67.2/24
+  ip address 192.0.67.2/24
   no ipv6 redirects
   hsrp version 2
   hsrp 560 
     preempt 
     priority 110
-    ip 172.19.67.1
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.67.1
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan561
   description gvn-gservers-pd-561
   no shutdown
   no ip redirects
-  ip address 172.19.66.2/24
+  ip address 192.0.66.2/24
   no ipv6 redirects
   hsrp version 2
   hsrp 561 
     preempt 
     priority 110
-    ip 172.19.66.1
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.66.1
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan562
   description gvn-gvoip-pd-562
   no shutdown
   no ip redirects
-  ip address 172.19.55.130/25
+  ip address 192.0.55.130/25
   no ipv6 redirects
   hsrp version 2
   hsrp 562 
     preempt 
     priority 110
-    ip 172.19.55.129
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.55.129
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan563
   description gvn-gafe-pd-563
   no shutdown
   no ip redirects
-  ip address 172.19.68.2/24
+  ip address 192.0.68.2/24
   no ipv6 redirects
   hsrp version 2
   hsrp 563 
     preempt 
     priority 110
-    ip 172.19.68.1
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.68.1
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 show interface transceiver
 
 interface Vlan564
   description gvn-gmgmt-pd-564
   no shutdown
   no ip redirects
-  ip address 172.19.69.2/24
+  ip address 192.0.69.2/24
   no ipv6 redirects
   hsrp version 2
   hsrp 564 
     preempt 
     priority 110
-    ip 172.19.69.1
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.69.1
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan570
   description gvn-gtlib-570
   no shutdown
   no ip redirects
-  ip address 172.19.57.2/24
+  ip address 192.0.57.2/24
   no ipv6 redirects
   hsrp version 2
   hsrp 570 
     preempt 
     priority 110
-    ip 172.19.57.1
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.57.1
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan571
   description gvn-gservers-571
   no shutdown
   no ip redirects
-  ip address 172.19.56.2/24
+  ip address 192.0.56.2/24
   no ipv6 redirects
   hsrp version 2
   hsrp 571 
     preempt 
     priority 110
-    ip 172.19.56.1
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.56.1
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan572
   description gvn-gvoip-572
   no shutdown
   no ip redirects
-  ip address 172.19.55.2/26
+  ip address 192.0.55.2/26
   no ipv6 redirects
   hsrp version 2
   hsrp 572 
     preempt 
     priority 110
-    ip 172.19.55.1
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.55.1
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan573
   description gvn-gafe-573
   no shutdown
   no ip redirects
-  ip address 172.19.58.2/24
+  ip address 192.0.58.2/24
   no ipv6 redirects
   hsrp version 2
   hsrp 573 
     preempt 
     priority 110
-    ip 172.19.58.1
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.58.1
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan574
   description gvn-gmgmt-574
   no shutdown
   no ip redirects
-  ip address 172.19.60.2/24
+  ip address 192.0.60.2/24
   no ipv6 redirects
   hsrp version 2
   hsrp 574 
     preempt 
     priority 110
-    ip 172.19.60.1
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.60.1
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan581
   description gvn-gvmotion-581
   no shutdown
   no ip redirects
-  ip address 172.19.59.130/26
+  ip address 192.0.59.130/26
   no ipv6 redirects
   hsrp version 2
   hsrp 581 
     preempt 
     priority 110
-    ip 172.19.59.129
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.59.129
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan585
   description gvn-server-pxe-585
   no shutdown
   no ip redirects
-  ip address 172.19.51.2/24
+  ip address 192.0.51.2/24
   no ipv6 redirects
   hsrp version 2
   hsrp 585 
     preempt 
     priority 110
-    ip 172.19.51.1
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.51.1
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan590
   description svn-590
   no shutdown
   no ip redirects
-  ip address 172.19.52.2/26
+  ip address 192.0.52.2/26
   no ipv6 redirects
   hsrp version 2
   hsrp 590 
     preempt 
     priority 110
-    ip 172.19.52.1
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.52.1
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface Vlan591
   description svn-aaa-591
   no shutdown
   no ip redirects
-  ip address 172.19.52.130/26
+  ip address 192.0.52.130/26
   no ipv6 redirects
   hsrp version 2
   hsrp 591 
     preempt 
     priority 110
-    ip 172.19.52.129
-  ip dhcp relay address 172.19.10.11 
-  ip dhcp relay address 10.184.101.11 
+    ip 192.0.52.129
+  ip dhcp relay address 192.0.192.11 
+  ip dhcp relay address 192.0.192.12
 
 interface port-channel1
   description vpc member port channel to sin1-nas1 & sin1-nas2
@@ -661,7 +661,7 @@ interface port-channel200
   vpc peer-link
 
 interface Ethernet1/1
-  description 10 GE port channel uplink to sin1-nas1 e1/1
+  description 192.GE port channel uplink to sin1-nas1 e1/1
   switchport mode trunk
   switchport trunk native vlan 3
   spanning-tree port type network
@@ -670,7 +670,7 @@ interface Ethernet1/1
   no shutdown
 
 interface Ethernet1/2
-  description 10 GE port channel uplink to sin1-nas1 e1/2
+  description 192.GE port channel uplink to sin1-nas1 e1/2
   switchport mode trunk
   switchport trunk native vlan 3
   spanning-tree port type network
@@ -679,7 +679,7 @@ interface Ethernet1/2
   no shutdown
 
 interface Ethernet1/3
-  description 10 GE port channel uplink to sin1-nas1 e1/3
+  description 192.GE port channel uplink to sin1-nas1 e1/3
   switchport mode trunk
   switchport trunk native vlan 3
   spanning-tree port type network
@@ -688,7 +688,7 @@ interface Ethernet1/3
   no shutdown
 
 interface Ethernet1/4
-  description 10 GE port channel uplink to sin1-nas2 e1/1
+  description 192.GE port channel uplink to sin1-nas2 e1/1
   switchport mode trunk
   switchport trunk native vlan 3
   spanning-tree port type network
@@ -697,7 +697,7 @@ interface Ethernet1/4
   no shutdown
 
 interface Ethernet1/5
-  description 10 GE port channel uplink to sin1-nas2 e1/2
+  description 192.GE port channel uplink to sin1-nas2 e1/2
   switchport mode trunk
   switchport trunk native vlan 3
   spanning-tree port type network
@@ -706,7 +706,7 @@ interface Ethernet1/5
   no shutdown
 
 interface Ethernet1/6
-  description 10 GE port channel uplink to sin1-nas2 e1/3
+  description 192.GE port channel uplink to sin1-nas2 e1/3
   switchport mode trunk
   switchport trunk native vlan 3
   spanning-tree port type network
@@ -798,19 +798,19 @@ interface Ethernet1/45
 interface Ethernet1/46
 
 interface Ethernet1/47
-  description vpc 10 GE keepalive interface to sin1-nag1 e1/47 
+  description vpc 192.GE keepalive interface to sin1-dist1 e1/47 
   no switchport
-  channel-group 10 mode active
+  channel-group 192.mode active
   no shutdown
 
 interface Ethernet1/48
-  description vpc 10 GE keepalive interface to sin1-nag1 e1/48
+  description vpc 192.GE keepalive interface to sin1-dist1 e1/48
   no switchport
-  channel-group 10 mode active
+  channel-group 192.mode active
   no shutdown
 
 interface Ethernet1/49
-  description vPC 10 GE peer link to sin1-nag2 e1/49
+  description vPC 192.GE peer link to sin1-dist2 e1/49
   switchport mode trunk
   switchport trunk native vlan 3
   spanning-tree port type network
@@ -818,7 +818,7 @@ interface Ethernet1/49
   no shutdown
 
 interface Ethernet1/50
-  description vPC 10 GE peer link to sin1-nag2 e1/50
+  description vPC 192.GE peer link to sin1-dist2 e1/50
   switchport mode trunk
   switchport trunk native vlan 3
   spanning-tree port type network
@@ -826,22 +826,22 @@ interface Ethernet1/50
   no shutdown
 
 interface Ethernet1/51
-  description 40 GE uplink to sin1-ncs1 e1/50
+  description 40 GE uplink to sin1-cor1 e1/50
   no switchport
   service-policy type qos input DC_IN_QOS_CLASS_SETGRP
   bfd interval 150 min_rx 150 multiplier 5
   no ip redirects
-  ip address 172.19.2.142/29
+  ip address 192.0.2.142/29
   no ipv6 redirects
   no shutdown
 
 interface Ethernet1/52
-  description 40 GE uplink to sin1-ncs2 e1/50
+  description 40 GE uplink to sin1-cor2 e1/50
   no switchport
   service-policy type qos input DC_IN_QOS_CLASS_SETGRP
   bfd interval 150 min_rx 150 multiplier 5
   no ip redirects
-  ip address 172.19.2.174/29
+  ip address 192.0.2.174/29
   no ipv6 redirects
   no shutdown
 
@@ -851,10 +851,10 @@ interface Ethernet1/54
 
 interface mgmt0
   vrf member management
-  ip address 172.19.3.21/24
+  ip address 192.0.3.21/24
 
 interface loopback0
-  ip address 172.19.1.7/32
+  ip address 192.0.1.7/32
 clock timezone GMT 0 0
 line console
 line vty
@@ -862,41 +862,41 @@ line vty
   access-class vty-access in
 boot nxos bootflash:/nxos.7.0.3.I2.2b.bin 
 ip radius source-interface loopback0
-ip route 172.19.1.9/32 172.19.3.9
-ip route 172.19.1.10/32 172.19.3.10
+ip route 192.0.1.9/32 192.0.3.9
+ip route 192.0.1.192.32 192.0.3.10
 no ip source-route
 router bgp 64665
-  router-id 172.19.1.7
+  router-id 192.0.1.7
   timers bgp 5 15
   log-neighbor-changes
   address-family ipv4 unicast
-    network 172.19.1.7/32
-    network 172.19.2.136/29
-    network 172.19.2.168/29
-    network 172.19.4.0/24
-    network 172.19.10.0/26
-    network 172.19.10.64/27
-    network 172.19.10.96/27
-    network 172.19.10.128/27
-    network 172.19.32.0/26
-    network 172.19.32.64/27
-    network 172.19.32.128/26
-    network 172.19.50.0/27
-    network 172.19.51.0/24
-    network 172.19.52.0/26
-    network 172.19.52.128/26
-    network 172.19.55.0/26
-    network 172.19.55.128/25
-    network 172.19.56.0/24
-    network 172.19.57.0/24
-    network 172.19.58.0/24
-    network 172.19.59.128/26
-    network 172.19.60.0/24
-    network 172.19.66.0/24
-    network 172.19.67.0/24
-    network 172.19.68.0/24
-    network 172.19.69.0/24
-  neighbor 172.19.2.137
+    network 192.0.1.7/32
+    network 192.0.2.136/29
+    network 192.0.2.168/29
+    network 192.0.4.0/24
+    network 192.0.192.0/26
+    network 192.0.192.64/27
+    network 192.0.192.96/27
+    network 192.0.192.128/27
+    network 192.0.32.0/26
+    network 192.0.32.64/27
+    network 192.0.32.128/26
+    network 192.0.50.0/27
+    network 192.0.51.0/24
+    network 192.0.52.0/26
+    network 192.0.52.128/26
+    network 192.0.55.0/26
+    network 192.0.55.128/25
+    network 192.0.56.0/24
+    network 192.0.57.0/24
+    network 192.0.58.0/24
+    network 192.0.59.128/26
+    network 192.0.60.0/24
+    network 192.0.66.0/24
+    network 192.0.67.0/24
+    network 192.0.68.0/24
+    network 192.0.69.0/24
+  neighbor 192.0.2.137
     bfd
     password 3 bea4c6ff06e373197e9f8562163a3a25
     update-source Ethernet1/51
@@ -904,7 +904,7 @@ router bgp 64665
       route-map SET-HIGH-LOCAL-PREF out
       next-hop-self
       soft-reconfiguration inbound always
-  neighbor 172.19.2.169
+  neighbor 192.0.2.169
     bfd
     password 3 bea4c6ff06e373197e9f8562163a3a25
     update-source Ethernet1/52
