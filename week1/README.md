@@ -65,13 +65,15 @@ week1-json-output.json  week1-yaml-output.yml
 
 ###YAML/JSON READ
 
-```
-
 Assignment 7 - Completed
 
 w1-07-yml-json-r.py
 
 Write a Python program that reads both the YAML file and the JSON file created in exercise6 and pretty prints the data structure that is returned.
+
+```
+
+
 
 (applied_python)[cdeluna@ip-172-30-0-4 scratch]$ python w1-07-yml-json-r.py
 
@@ -171,12 +173,14 @@ donut.json
 (applied_python)[cdeluna@ip-172-30-0-4 scratch]$ 
 
 
-Assignment 8 - Completed
 
-w1-08-ccp-crypto.py
 
 ```
 ###CiscoConfigParse Parent/Child/Search
+
+Assignment 8 - Completed
+
+w1-08-ccp-crypto.py
 
 ```
 D:\Dropbox (Indigo Wire Networks)\scripts\python\2016\PyNetA>python w1-08-ccp-crypto.py
@@ -230,9 +234,11 @@ crypto map CRYPTO 50 ipsec-isakmp
  match address VPN-TEST5
 
 |
-
+```
 
 Assignment 9 - Completed
+
+```
 
 ====PARENT LEVEL ITEMS in SEARCH for PFS Group2===
 crypto map CRYPTO 20 ipsec-isakmp 
@@ -244,8 +250,11 @@ Parent: True
 Children: False
 Children items: [<IOSCfgLine # 98 ' set peer 3.3.3.1' (parent is # 97)>, <IOSCfgLine # 99 ' set transform-set AES-SHA ' (parent is # 97)>, <IOSCfgLine # 100 ' set pfs group2' (parent is # 97)>, <IOSCfgLine # 101 ' match address VPN-TEST3' (parent is # 97)>]
 
+```
 
 Assignment 10 - Completed
+
+```
 
 ====PARENT LEVEL ITEMS in SEARCH for !AES===
 crypto map CRYPTO 50 ipsec-isakmp 
