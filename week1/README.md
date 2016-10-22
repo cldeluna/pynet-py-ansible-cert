@@ -3,9 +3,9 @@ Claudia de Luna
 cldeluna@yahoo.com
 
 ---
-Week 1 - 2016-07-28
+Week 1 - 2016-07-28/2016-10-13
 ---
-All git/GitHub actions completed.
+All git/GitHub actions (Assignments 1 - 5) completed.
 
 ###YAML/JSON Write:
 This scripts takes in one argument, a cisco based configuration file with vlan information.  Using CiscoConfigParse, the file is parsed and the vlan parent child information is extracted.  The resulting elements are split using a space as a delimiter and elements 0 and 1 are used as key and value pairs respectively to generate a list of dictionaries.  The resulting data structures are saved in YAML and JSON formatted files.  The stdout output shows each element alont with the element type and the number of elements.
