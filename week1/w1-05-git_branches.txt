@@ -21,3 +21,57 @@ Claudia@Mac-mini:~/Dropbox/scripts/python/2016/PyNetACert/week1$ git branch -a
 * test
   remotes/origin/master
 Claudia@Mac-mini:~/Dropbox/scripts/python/2016/PyNetACert/week1$ touch w1-05-git_branches.txt
+
+Claudia@Mac-mini:~/Dropbox/scripts/python/2016/PyNetACert/week1$ git checkout master
+Switched to branch 'master'
+Your branch is up-to-date with 'origin/master'.
+Claudia@Mac-mini:~/Dropbox/scripts/python/2016/PyNetACert/week1$ git branch
+* master
+  test
+Claudia@Mac-mini:~/Dropbox/scripts/python/2016/PyNetACert/week1$ git merge test --no-ff
+Merge made by the 'recursive' strategy.
+ week1/w1-05-git_branches.txt | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+ create mode 100644 week1/w1-05-git_branches.txt
+Claudia@Mac-mini:~/Dropbox/scripts/python/2016/PyNetACert/week1$ test w1-05-git_branches.txt
+Claudia@Mac-mini:~/Dropbox/scripts/python/2016/PyNetACert/week1$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	../.DS_Store
+	../.idea/
+	../PyNetAvENV/
+	__init__.py
+	c1-6-yml-json-w.py
+	cisco_ipsec.txt
+	id_rsa_2048-win10desktop
+	sin-nag1-mgmt0_2016-04-19_12-00-22-shrunonly.txt
+	sin-nag1-mgmt0_2016-04-19_12-00-22.txt
+	sin-nag1-shrunonly.txt
+	telnet_test.pyc
+	test.yml
+	vince-test1.py
+	w1-06-yml-json-w.py
+	w1-07-yml-json-r.py
+	w1-08-ccp-crypto.py
+	week1-json-output.json
+	week1-yaml-output.yml
+	../week2/
+	../week5/
+	../week7/
+
+nothing added to commit but untracked files present (use "git add" to track)
+Claudia@Mac-mini:~/Dropbox/scripts/python/2016/PyNetACert/week1$ git push -u origin masterCounting objects: 5, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 713 bytes | 0 bytes/s, done.
+Total 5 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), done.
+To git@github.com:cldeluna/pynet-py-ansible-cert.git
+   1fdb04b..2cac4e6  master -> master
+Branch master set up to track remote branch master from origin.
+Claudia@Mac-mini:~/Dropbox/scripts/python/2016/PyNetACert/week1$
+
