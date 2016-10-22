@@ -7,6 +7,16 @@ Week 1 - 2016-07-28/2016-10-13
 ---
 All git/GitHub actions (Assignments 1 - 5) completed.
 
+Assignment 5 - Git test branch - completed.
+
+w1-05-git_branches.txt
+
+Assignment 6 - Completed
+
+Write a Python program that creates a list. One of the elements of the list should be a dictionary with at least two keys. Write this list out to a file using both YAML and JSON formats. The YAML file should be in the expanded form.
+
+w1-06-yml-json-w.py
+
 ###YAML/JSON Write:
 This scripts takes in one argument, a cisco based configuration file with vlan information.  Using CiscoConfigParse, the file is parsed and the vlan parent child information is extracted.  The resulting elements are split using a space as a delimiter and elements 0 and 1 are used as key and value pairs respectively to generate a list of dictionaries.  The resulting data structures are saved in YAML and JSON formatted files.  The stdout output shows each element alont with the element type and the number of elements.
 
@@ -56,6 +66,12 @@ week1-json-output.json  week1-yaml-output.yml
 ###YAML/JSON READ
 
 ```
+
+Assignment 7 - Completed
+
+w1-07-yml-json-r.py
+
+Write a Python program that reads both the YAML file and the JSON file created in exercise6 and pretty prints the data structure that is returned.
 
 (applied_python)[cdeluna@ip-172-30-0-4 scratch]$ python w1-07-yml-json-r.py
 
@@ -155,6 +171,10 @@ donut.json
 (applied_python)[cdeluna@ip-172-30-0-4 scratch]$ 
 
 
+Assignment 8 - Completed
+
+w1-08-ccp-crypto.py
+
 ```
 ###CiscoConfigParse Parent/Child/Search
 
@@ -212,6 +232,8 @@ crypto map CRYPTO 50 ipsec-isakmp
 |
 
 
+Assignment 9 - Completed
+
 ====PARENT LEVEL ITEMS in SEARCH for PFS Group2===
 crypto map CRYPTO 20 ipsec-isakmp 
 Parent: True
@@ -223,6 +245,7 @@ Children: False
 Children items: [<IOSCfgLine # 98 ' set peer 3.3.3.1' (parent is # 97)>, <IOSCfgLine # 99 ' set transform-set AES-SHA ' (parent is # 97)>, <IOSCfgLine # 100 ' set pfs group2' (parent is # 97)>, <IOSCfgLine # 101 ' match address VPN-TEST3' (parent is # 97)>]
 
 
+Assignment 10 - Completed
 
 ====PARENT LEVEL ITEMS in SEARCH for !AES===
 crypto map CRYPTO 50 ipsec-isakmp 
