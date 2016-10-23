@@ -1,0 +1,13 @@
+*.log
+*.pyc
+../week3/snmp_helper.py
+*.backup
+sin*
+*rsa*
+*test*
+*ENV*
+.DS*
+.idea*
+__*
+c1*
+*ipsec*
