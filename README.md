@@ -1,4 +1,4 @@
-# Kirk Beyers [PyNet Python + Ansible] Course
+# Kirk Byers [PyNet Python + Ansible] Course
 
 # GitHub Repository for classworkd: pynet-py-ansible-cert
 
