@@ -1,0 +1,38 @@
+"\r\n\r\narctic-sw01>show ip int br\r\nInterface                  IP-Address     \
+  \ OK? Method Status                Protocol\r\nVlan1                      10.1.10.100\
+  \     YES NVRAM  up                    up      \r\nFastEthernet0/1            unassigned\
+  \      YES unset  down                  down    \r\nFastEthernet0/2            unassigned\
+  \      YES unset  down                  down    \r\nFastEthernet0/3            unassigned\
+  \      YES unset  administratively down down    \r\nFastEthernet0/4            unassigned\
+  \      YES unset  up                    up      \r\nFastEthernet0/5            unassigned\
+  \      YES unset  down                  down    \r\nFastEthernet0/6            unassigned\
+  \      YES unset  down                  down    \r\nFastEthernet0/7            unassigned\
+  \      YES unset  down                  down    \r\nFastEthernet0/8            unassigned\
+  \      YES unset  down                  down    \r\nGigabitEthernet0/1         unassigned\
+  \      YES unset  up                    up      \r\narctic-sw01>term len 0\r\narctic-sw01>show\
+  \ version\r\nCisco Internetwork Operating System Software \r\nIOS (tm) C2940 Software\
+  \ (C2940-I6K2L2Q4-M), Version 12.1(22)EA11, RELEASE SOFTWARE (fc2)\r\nCopyright\
+  \ (c) 1986-2008 by cisco Systems, Inc.\r\nCompiled Tue 08-Jan-08 11:14 by amvarma\r\
+  \nImage text-base: 0x80010000, data-base: 0x8068C000\r\n\r\nROM: Bootstrap program\
+  \ is C2950 boot loader\r\n\r\narctic-sw01 uptime is 21 weeks, 2 days, 19 hours,\
+  \ 45 minutes\r\nSystem returned to ROM by power-on\r\nSystem image file is \"flash:/c2940-i6k2l2q4-mz.121-22.EA11/c2940-i6k2l2q4-mz.121-22.EA11.bin\"\
+  \r\n\r\n\r\nThis product contains cryptographic features and is subject to United\r\
+  \nStates and local country laws governing import, export, transfer and\r\nuse. Delivery\
+  \ of Cisco cryptographic products does not imply\r\nthird-party authority to import,\
+  \ export, distribute or use encryption.\r\nImporters, exporters, distributors and\
+  \ users are responsible for\r\ncompliance with U.S. and local country laws. By using\
+  \ this product you\r\nagree to comply with applicable laws and regulations. If you\
+  \ are unable\r\nto comply with U.S. and local laws, return this product immediately.\r\
+  \n\r\nA summary of U.S. laws governing Cisco cryptographic products may be found\
+  \ at:\r\nhttp://www.cisco.com/wwl/export/crypto/tool/stqrg.html\r\n\r\nIf you require\
+  \ further assistance please contact us by sending email to\r\nexport@cisco.com.\r\
+  \n\r\ncisco WS-C2940-8TT-S (RC32300) processor (revision D0) with 19867K bytes of\
+  \ memory.\r\nProcessor board ID FHK0834Y19X\r\nLast reset from system-reset\r\n\
+  Running Standard Image\r\n8 FastEthernet/IEEE 802.3 interface(s)\r\n1 Gigabit Ethernet/IEEE\
+  \ 802.3 interface(s)\r\nThe password-recovery mechanism is enabled.\r\n\r\n32K bytes\
+  \ of flash-simulated non-volatile configuration memory.\r\nBase ethernet MAC Address:\
+  \ 00:11:93:ED:B3:40\r\nMotherboard assembly number: 73-8784-05\r\nPower supply part\
+  \ number: 341-0085-01\r\nMotherboard serial number: FOC083411FU\r\nPower supply\
+  \ serial number: HIC081603DY\r\nModel revision number: D0\r\nMotherboard revision\
+  \ number: A0\r\nModel number: WS-C2940-8TT-S\r\nSystem serial number: FHK0834Y19X\r\
+  \nConfiguration register is 0xF\r\n\r\narctic-sw01>"

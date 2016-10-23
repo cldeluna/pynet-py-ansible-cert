@@ -1,0 +1,3 @@
+- {commstr: cisco, ip: 10.1.10.100, snmp_port: '161'}
+- {commstr: public, ip: 10.1.10.17, snmp_port: '161'}
+

@@ -1,0 +1,2 @@
+[{commstr: cisco, ip: 10.1.10.100, snmp_port: '161'}, {commstr: cisco, ip: 10.1.10.101,
+    snmp_port: '161'}]
