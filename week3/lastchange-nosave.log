@@ -1,0 +1,46 @@
+
+ACTION IS CHECK
+
+BASELINE DATA
+sysName: 		arctic-sw01.uwaco.net
+sysObjectID: 		SNMPv2-SMI::enterprises.9.1.540
+RunLastChanged: 		466812250
+RunLastSaved: 		466819780
+StartLastChanged: 		466819780
+ifNumber: 		11
+sysUpTime: 		467114794
+time: 		1477267420.71
+sysDescr: 		Cisco Internetwork Operating System Software 
+IOS (tm) C2940 Software (C2940-I6K2L2Q4-M), Version 12.1(22)EA11, RELEASE SOFTWARE (fc2)
+Copyright (c) 1986-2008 by cisco Systems, Inc.
+Compiled Tue 08-Jan-08 11:14 by amvarma
+sysContact: 		Indigo Wire Operations
+
+CURRENT DATA
+sysName: 		arctic-sw01.uwaco.net
+sysObjectID: 		SNMPv2-SMI::enterprises.9.1.540
+RunLastChanged: 		467166579
+RunLastSaved: 		466819780
+StartLastChanged: 		466819780
+ifNumber: 		11
+sysUpTime: 		467221182
+time: 		1477268484.61
+sysDescr: 		Cisco Internetwork Operating System Software 
+IOS (tm) C2940 Software (C2940-I6K2L2Q4-M), Version 12.1(22)EA11, RELEASE SOFTWARE (fc2)
+Copyright (c) 1986-2008 by cisco Systems, Inc.
+Compiled Tue 08-Jan-08 11:14 by amvarma
+sysContact: 		Indigo Wire Operations
+{'StartLastChanged': 0, 'RunLastChanged': 59, 'RunLastSaved': 0, 'sysUpTime': 17}
+StartLastChanged: 		0
+RunLastChanged: 		59
+RunLastSaved: 		0
+sysUpTime: 		17
+
+Device arctic-sw01.uwaco.net has baseline from 17 minutes ago at: Sun Oct 23 17:03:40 2016
+
+Running Configuration changed at approximatelySun Oct 23 17:20:40 2016.  Delta Value: 59
+
+Running Configuration has not been saved.
+
+StarupConfiguration has not changed.
+Send Email
