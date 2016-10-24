@@ -291,7 +291,7 @@ def main():
 # Standard call to the main() function.
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print '\nUsage: w3-01-FindCfgChg.py <JSON file with device information> <Action "baseline" | "check">\nExample: python w3-01-FindCfgChg.py python w3-01-FindCfgChg.py "device_info.json" "check"\n\n'
+        print '\nUsage: w3-01-FindConfChg.py <JSON file with device information> <Action "baseline" | "check">\nExample:  python w3-01-FindConfChg.py "device_info.json" "check"\n\n'
         sys.exit()
     else:
         main()
