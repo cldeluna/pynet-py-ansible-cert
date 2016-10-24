@@ -29,10 +29,16 @@ def load_json(file):
         data = json.load(json_data)
         #print(data)
 
+    # Return list of dictionaries
     return data
 
 
 def get_snmp3_info(dev_info):
+
+    # Using the device information pulled out of a JSON file
+    # and using the OIDs from JSON file oids.json
+    # Use SNMPv3 to obtain the values of those oids and store them in a dictionary
+    # whose keys are the oid name (keys from oids.json file)
 
     snmp_dict = {}
 
@@ -68,25 +74,35 @@ def get_snmp3_info(dev_info):
     snmp_dict['time'] = time.time()
     #print snmp_dict
 
+    # Return dictionary of key:value pairs
     return snmp_dict
 
 
 def print_dict(dict):
 
+    # Generic Print dictionary function
     for k,v in dict.items():
         print k + ": \t\t" + str(v)
 
     return None
 
 
-def compare_ccmHistory(base, curr):
+def compare_ccmHistory(oid_list, base, curr):
+
+    # This function takes in a list of oids, a baseline dictionary of oid values
+    # and a current dictionary of oid values and performs a comparison of each value
+    # it places the delta minutes (current - baseline) in a dictionary and returns
+    # this "delta" dictionary
+    # Note: This should be more generic so you have the delta of whaever you send
 
     # sysUpTime:              466541355
     # RunLastChanged:         465372359
     # RunLastSaved:           465372762
     # StartLastChanged:       63091204
 
-    oid_list = ['sysUpTime', 'RunLastChanged', 'RunLastSaved', 'StartLastChanged']
+    # Now this is passed to the function so that it can be used in the future for
+    # for other comparisons
+    #oid_list = ['sysUpTime', 'RunLastChanged', 'RunLastSaved', 'StartLastChanged']
 
     delta_dict = {}
 
@@ -106,46 +122,60 @@ def compare_ccmHistory(base, curr):
         # print up_sec
         # print up_min
 
-        delta_dict.update({key : up_min})
+        delta_dict.update({key: up_min})
 
-    print delta_dict
+    #print delta_dict
 
     return delta_dict
 
 
-def send_mail(recipient, subject, message, sender):
-    '''
-    Simple function to help simplify sending SMTP email
+def compare_iods(oid_list, base, curr):
 
-    Assumes a mailserver is available on localhost
-    '''
+    # This function takes in a list of oids, a baseline dictionary of oid values
+    # and a current dictionary of oid values and performs a comparison of each value
+    # it places the delta minutes (current - baseline) in a dictionary and returns
+    # this "delta" dictionary
+    # Note: This should be more generic so you have the delta of whaever you send
 
-    import smtplib
-    from email.mime.text import MIMEText
+    # Now this is passed to the function so that it can be used in the future for
+    # for other comparisons
+    #oid_list = ['sysUpTime', 'RunLastChanged', 'RunLastSaved', 'StartLastChanged']
 
-    message = MIMEText(message)
-    message['Subject'] = subject
-    message['From'] = sender
-    message['To'] = recipient
+    delta_dict = {}
 
-    # Create SMTP connection object to localhost
-    smtp_conn = smtplib.SMTP('dedrelay.secureserver.net')
+    #print len(oid_list)
 
+    # The items in the oid list will become keys in the returned dictionary
+    for key in oid_list:
 
-    # Send the email
-    smtp_conn.sendmail(sender, recipient, message.as_string())
+        #print "*************"
+        #print key
 
-    # Close SMTP connection
+        # This assumes that values increment up
+        delta = int(curr[key]) - int(base[key])
 
-    smtp_conn.quit()
+        # print "=========" + item + "========="
+        # print delta
 
-    return True
+        delta_dict.update({key: delta})
+
+    #print delta_dict
+
+    return delta_dict
 
 
 def sendemail(from_addr, to_addr_list, cc_addr_list,
               subject, message,
               login, password,
               smtpserver='smtp.gmail.com:587'):
+
+    # Script directly from Google to use Gmail
+    # Note: "out of the box" this does not work because the SMTO server rejects the login
+    # attemps as insecure.
+    # You need to Turn ON "Access for less secur apps" which is probably not a good thing
+    # to do in general.
+
+
     header = 'From: %s\n' % from_addr
     header += 'To: %s\n' % ','.join(to_addr_list)
     header += 'Cc: %s\n' % ','.join(cc_addr_list)
@@ -162,7 +192,6 @@ def sendemail(from_addr, to_addr_list, cc_addr_list,
 
 # Provided main() calls the above functions
 def main():
-    # Take path argument and list all text files
     """
     Description
     :return:
@@ -177,16 +206,22 @@ def main():
     #print len(device_info_payload)
     #print type(device_info_payload)
 
+    # Current script only processes one device
     if len(device_info_payload) == 1:
+
         #print "proceed"
 
         if action.strip() == 'baseline':
             print "\nACTION IS BASELINE"
             baseline_info = get_snmp3_info(device_info_payload[0])
 
+            # Establish the time in a string to append to the JSON file that wills ve the
+            # data returned from get_snmp3_info
             timestr = time.strftime("%Y%m%d-%H%M%S")
             #print timestr
 
+            # Build filename based on the name of the device, the fact that it is
+            # generated as a bseline, and a timestamp
             filename = baseline_info['sysName'] + "-baseline-" + timestr + ".json"
 
             with open(filename, 'w') as outfile:
@@ -206,86 +241,94 @@ def main():
             msg3 = ''
             changed = False
 
+            # Find the most recent baseline file to use for comparison
+            # Note: This needs some work..it should only look for files with the
+            # workd baseline and a timestamp in them.  Should build RegEx for this
             newest = max(glob.iglob('*.[Jj]son'), key=os.path.getctime)
             #print newest
 
+            # Load the baseline data
             baseline_data = load_json(newest)
             print "\nBASELINE DATA"
             print_dict(baseline_data)
 
+            # Get the current data
             current_data = get_snmp3_info(device_info_payload[0])
             print "\nCURRENT DATA"
             print_dict(current_data)
 
-            change_dict = compare_ccmHistory(baseline_data, current_data)
+            # Compare the OIDs send in the variable oid_list
+            oid_list = ['sysUpTime', 'RunLastChanged', 'RunLastSaved', 'StartLastChanged']
+            change_dict = compare_ccmHistory(oid_list, baseline_data, current_data)
 
             print_dict(change_dict)
-
-            # sysUpTime:              466541355
-            # RunLastChanged:         465372359
-            # RunLastSaved:           465372762
-            # StartLastChanged:       63091204
 
             name = current_data['sysName']
 
             msg0 = "\nDevice " + name + " has baseline from " + str(change_dict['sysUpTime']) + " minutes ago at: " + time.ctime(baseline_data['time'])
 
+
+            # Logic for determining change
+            # If the change dict values are 0, there has been no change.
+            # If the change dict values are >0, there has been a change to the config
+            # Each possible type of change is checked and the boolean "changed" is ste to True in each check
+            # so we know if we need to email
             if change_dict['RunLastChanged'] > 0:
                 msg1 = "\nRunning Configuration changed.  Delta Value: " + str(change_dict['RunLastChanged'])
                 #print msg1
-                #print "Running Configuration changed.  Delta Value: " + str(change_dict['RunLastChanged'])
                 # print "++++++++++++"
                 # print baseline_data['time']
                 # print change_dict['sysUpTime']
+                # Add the sysUptime delta to the time from the baseline to get approx time of change
                 update_time_epoch = baseline_data['time'] + (60*change_dict['sysUpTime'])
                 #print update_time_epoch
 
+                # Convert epoch time to human readable time
                 update_time = time.ctime(update_time_epoch)
                 #print update_time
 
                 msg1 = "\nRunning Configuration changed at approximately " + update_time + ".  Delta Value: " + str(change_dict['RunLastChanged'])
-
                 changed = True
 
             else:
                 msg1 = "\nRunning Configuration has not changed."
-                #print msg1
+
 
             if change_dict['RunLastSaved'] > 0:
 
                 msg2 = "\nRunning Configuration was saved.  Delta Value: " + str(change_dict['RunLastSaved'])
-                #print msg2
                 changed = True
+
             else:
                 msg2 =  "\nRunning Configuration has not been saved."
-                #print msg2
+
 
             if change_dict['StartLastChanged'] > 0:
+
                 msg3 =  "\nStartup Configuration changed. Delta Value: " + str(change_dict['StartLastChanged'])
-                #print msg3
                 changed = True
+
             else:
                 msg3 =  "\nStarupConfiguration has not changed."
 
 
+            # This is clumsy
             print msg0
             print msg1
             print msg2
             print msg3
+            print "\n"
 
+            # Concatenate the messages into one variable to pass in the sendemail function
             msg = msg0 + msg1 + msg2 + msg3 + "\n\n" + sys.argv[0]
 
-            #send_mail(recipient, subject, message, sender):
-
-            # #sendemail(from_addr, to_addr_list, cc_addr_list,
-            #               subject, message,
-            #               login, password,
-            #               smtpserver='smtp.gmail.com:587'):
+            # If thee comparison determined that the configuration changed send email
             if changed:
                 print "Send Email"
                 #sendemail('delunac@gmail.com', 'cldeluna@yahoo.com', 'cldeluna@yahoo.com', "Router Configuration Changed: " + name, msg , '*****', '*****')
 
     else:
+        # Processing multiple devices not implemented yet
         print "Feature not implemented yet!"
 
 # Standard call to the main() function.

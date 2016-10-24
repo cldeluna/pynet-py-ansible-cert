@@ -22,6 +22,11 @@ Action:
 "snapshot" results in a "snapshot" of all the OIDs in the JSON file "oids.json" which is saved to a file.
 "check" results in the latest snapshot file in the directory being selected and loaded in to a "snapshot" dictionary, all variables are refreshed and loaded into a current dictionary and comparisons are made.  A series of if statements are processed to build out a message as to what, if any, changes have ocurred since the snapshot along with the time of the snapshot and the approximate time of the change based on the sysUptime delta.  
 
+Both actions use the get_snmp3_info function.  Snapshot saves it to a file.  Check saves it to a variable for comparison with the loaded data from the snapshot Json file.
+
+During the snapshot action one of the key:value pairs saved is the time using the time.time() function.  That allows us to correlate time wiht sysUpTime.
+During the check function the current sysUpTime is added to the snapshot time and converted using time.ctime(snapshot.time + curr.time) to derive the approximate time of the change.  I'm sure there is a better way to do this as tihs has many flaws including needed the sysUpTime to be uninterrupted.  This fails if the router is rebooted between the snapshot and the check actions.
+
 Email is sent in the event of a change (which is a boolean set if any (or all) of the ccmHistory values changed.
 
 Google email was selected for this project 
