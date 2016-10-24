@@ -283,7 +283,7 @@ def main():
             #               smtpserver='smtp.gmail.com:587'):
             if changed:
                 print "Send Email"
-                #sendemail('delunac@gmail.com', 'cldeluna@yahoo.com', 'cldeluna@yahoo.com', "Router Configuration Changed: " + name, msg , 'delunac@gmail.com', 'd0dgers1')
+                #sendemail('delunac@gmail.com', 'cldeluna@yahoo.com', 'cldeluna@yahoo.com', "Router Configuration Changed: " + name, msg , '*****', '*****')
 
     else:
         print "Feature not implemented yet!"
@@ -291,7 +291,7 @@ def main():
 # Standard call to the main() function.
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print '\nUsage: w3-01-FindCfgChg.py <what are the argumentsr>\nExample: python w3-01-FindCfgChg.py "arguments"\n\n'
+        print '\nUsage: w3-01-FindCfgChg.py <JSON file with device information> <Action "baseline" | "check">\nExample: python w3-01-FindCfgChg.py python w3-01-FindCfgChg.py "device_info.json" "check"\n\n'
         sys.exit()
     else:
         main()
