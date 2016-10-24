@@ -20,7 +20,7 @@ def main():
     # Take path argument and list all text files
     """
     Test SNMPv3 script utilizing Kirks snmp_helper module
-    
+
     """
 
     ip = '10.1.10.100'
@@ -66,7 +66,7 @@ def main():
 # Standard call to the main() function.
 if __name__ == '__main__':
     if len(sys.argv) != 1:
-        #print '\nUsage: snmp3_test.py <what are the argumentsr>\nExample: python snmp3_test.py "arguments"\n\n'
+        #print '\nUsage: snmp3_test.py \nExample: python snmp3_test.py\n\n'
         sys.exit()
     else:
         main()
