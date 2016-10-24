@@ -5,14 +5,14 @@
 ### Exercise 1
 Using SNMPv3 create a script that detects router configuration changes.
 
-w3-01-FindConfChg.py
+w3_01_FindConfChg.py
 
 
 ```
-Claudia@Mac-mini:~/Dropbox (Indigo Wire Networks)/scripts/python/2016/PyNetACert/week3$ python w3-01-FindConfChg.py 'device_info.json'
+Claudia@Mac-mini:~/Dropbox (Indigo Wire Networks)/scripts/python/2016/PyNetACert/week3$ python w3_01_FindConfChg.py 'device_info.json'
 
-Usage: w3-01-FindConfChg.py <JSON file with device information> <Action "baseline" | "check">
-Example: python w3-01-FindConfChg.py "device_info.json" "check"
+Usage: w3_01_FindConfChg.py <JSON file with device information> <Action "baseline" | "check">
+Example: python w3_01_FindConfChg.py "device_info.json" "check"
 
 ```
 This script takes two arguments, a JSON file with all the information required to establish and SNMP session to one (or more in the future) device and an action.  
@@ -31,7 +31,7 @@ Email is sent in the event of a change (which is a boolean set if any (or all) o
 
 Google email was selected for this project 
 
-Enhancement:  I strip these but I should lower as well.  I don't do alot of file checking.
+Enhancement:  I strip these but I should lower as well.  I don't do alot of error checking particulary with respect to file handling.
 
 ### Functions
 
@@ -44,7 +44,7 @@ Enhancement:  I strip these but I should lower as well.  I don't do alot of file
 ### Script in "Baseline" Mode
 
 ```
-Claudia@Mac-mini:~/Dropbox (Indigo Wire Networks)/scripts/python/2016/PyNetACert/week3$ python w3-01-FindConfChg.py 'device_info.json' 'baseline'
+Claudia@Mac-mini:~/Dropbox (Indigo Wire Networks)/scripts/python/2016/PyNetACert/week3$ python w3_01_FindConfChg.py 'device_info.json' 'baseline'
 
 ACTION IS BASELINE
 
@@ -56,7 +56,7 @@ Claudia@Mac-mini:~/Dropbox (Indigo Wire Networks)/scripts/python/2016/PyNetACert
 ### Script in "Check" Mode without changes
 
 ```
-Claudia@Mac-mini:~/Dropbox (Indigo Wire Networks)/scripts/python/2016/PyNetACert/week3$ python w3-01-FindConfChg.py 'device_info.json' 'check'
+Claudia@Mac-mini:~/Dropbox (Indigo Wire Networks)/scripts/python/2016/PyNetACert/week3$ python w3_01_FindConfChg.py 'device_info.json' 'check'
 
 ACTION IS CHECK
 
@@ -139,8 +139,49 @@ Running Configuration changed at approximatelySun Oct 23 17:19:40 2016.  Delta V
 Running Configuration has not been saved.
 StarupConfiguration has not changed.
 
-w3-01-FindCfgChg.py
+w3_01_FindConfChg.py
 
 
 ```
+
+### Exercise 2
+Using SNMPv3 create two SVG image files
+
+w3_02_IntGraph.py
+
+This script leverages the functions in the w3_01_FindConfChg.py script and in imported into the Interface Graph script.
+
+- load_json(file)
+- get_snmp3_info(dev_info)
+- print_dict(dict)
+- compare_ccmHistory(oid_list,base, curr)
+- compare_iods(oid_list, base, curr)
+
+It also has some functions of its own:
+
+- pygal_plot(dict_of_lists, title, x_labels,output_filename)
+- save2json(payload)
+
+The script takes as arguments 
+- the JSON Device information file (the same one in fact used for Exercise 1 but with additional OIDS).
+- the interface index (for future funcitonality)
+- the time interval to poll in seconds
+
+Note:  Future versions should also include the maximum polling time.
+
+Once the device information is loaded in and the device can be queried via SNMPv3 we loop through and poll each time_interval up to the max_monitor interval.
+
+The data returned from the function w3_01_FindConfChg.get_snmp3_info (a dictionary) is appended to a list (list_of_all_gets).  That payload can be saved.
+
+Then there are two sections of the remaining main function. The first generates the Octet graph and the second generates the Packet graph.
+
+
+```
+Claudia@Mac-mini:~/Dropbox/scripts/python/2016/PyNetACert/week3$ python w3_02_IntGraph.py
+
+Usage: w3_02_IntGraph.py <JSON file with device information> <SNMP Interface Index Number> <time interval in seconds>
+Example: python w3_02_IntGraph.py "device_info.json" "9" "300"
+```
+
+
 

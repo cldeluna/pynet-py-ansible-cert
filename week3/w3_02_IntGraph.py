@@ -28,13 +28,13 @@ def pygal_plot(dict_of_lists, title, x_labels,output_filename):
     # Function is passed a dictionary of lists which contains a key per line, and a value
     # that is a list of data for the line.
 
-    fa4_in_octets = [5269, 5011, 6705, 5987, 5011, 5071, 6451, 5011,
-                                    5011, 6181, 5281, 5011]
-    fa4_out_octets =[5725, 5783, 7670, 6783, 5398, 5783, 9219, 3402,
-                                    5783, 6953, 5668, 5783]
-
-    fa4_in_packets = [24, 21, 40, 32, 21, 21, 49, 9, 21, 34, 24, 21]
-    fa4_out_packets = [24, 21, 40, 32, 21, 21, 49, 9, 21, 34, 24, 21]
+    # fa4_in_octets = [5269, 5011, 6705, 5987, 5011, 5071, 6451, 5011,
+    #                                 5011, 6181, 5281, 5011]
+    # fa4_out_octets =[5725, 5783, 7670, 6783, 5398, 5783, 9219, 3402,
+    #                                 5783, 6953, 5668, 5783]
+    #
+    # fa4_in_packets = [24, 21, 40, 32, 21, 21, 49, 9, 21, 34, 24, 21]
+    # fa4_out_packets = [24, 21, 40, 32, 21, 21, 49, 9, 21, 34, 24, 21]
 
     # Create a Chart of type Line
     line_chart = pygal.Line()
@@ -46,10 +46,6 @@ def pygal_plot(dict_of_lists, title, x_labels,output_filename):
     line_chart.x_labels = x_labels
 
     # Add each one of the above lists into the graph as a line with corresponding label
-    # line_chart.add('InPackets', fa4_in_packets)
-    # line_chart.add('OutPackets',  fa4_out_packets)
-    # line_chart.add('InBytes', fa4_out_octets)
-    # line_chart.add('OutBytes', fa4_in_octets)
     #
     for line, values in dict_of_lists.items():
         print line
@@ -98,7 +94,7 @@ def main():
     time_interval = float(sys.argv[3])
     # Maximum Monitor Time in seconds
     # One hour 3600 seconds
-    max_monitor_interval = 60
+    max_monitor_interval = 3600
     DEBUG = True
 
 
