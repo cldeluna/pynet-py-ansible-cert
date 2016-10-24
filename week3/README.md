@@ -12,7 +12,7 @@ w3-01-FindConfChg.py
 Claudia@Mac-mini:~/Dropbox (Indigo Wire Networks)/scripts/python/2016/PyNetACert/week3$ python w3-01-FindConfChg.py 'device_info.json'
 
 Usage: w3-01-FindConfChg.py <JSON file with device information> <Action "baseline" | "check">
-Example: python w3-01-FindConfChg.py python w3-01-FindConfChg.py "device_info.json" "check"
+Example: python w3-01-FindConfChg.py "device_info.json" "check"
 
 ```
 This script takes two arguments, a JSON file with all the information required to establish and SNMP session to one (or more in the future) device and an action.  
