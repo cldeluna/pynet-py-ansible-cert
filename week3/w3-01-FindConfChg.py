@@ -243,7 +243,7 @@ def main():
                 update_time = time.ctime(update_time_epoch)
                 #print update_time
 
-                msg1 = "\nRunning Configuration changed at approximately" + update_time + ".  Delta Value: " + str(change_dict['RunLastChanged'])
+                msg1 = "\nRunning Configuration changed at approximately " + update_time + ".  Delta Value: " + str(change_dict['RunLastChanged'])
 
                 changed = True
 
