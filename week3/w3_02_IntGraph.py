@@ -81,16 +81,36 @@ def get_list():
 
 # Provided main() calls the above functions
 def main():
-    # Take path argument and list all text files
     """
-    Description
-    :return:
+    This script leverages the functions in the w3_01_FindConfChg.py script which is imported into this
+    Interface Graph script.
+
+    It also has some functions of its own:
+    - pygal_plot(dict_of_lists, title, x_labels,output_filename)
+    - save2json(payload)
+
+    The script takes as arguments
+    - the JSON Device information file (the same one in fact used for Exercise 1 but with additional
+    OIDS).
+    - the interface index (for future functionality)
+    - the time interval to poll in seconds
+    Note:  Future versions should also include the maximum polling time.
+
+    Once the device information is loaded in and the device can be queried via SNMPv3 we loop through
+    and poll each time_interval up to the max_monitor interval.
+
+    The data returned from the function w3_01_FindConfChg.get_snmp3_info (a dictionary) is appended
+    to a list (list_of_all_gets).  That payload can be saved.
+
+    Then there are two sections of the remaining main function. The first generates the Octet graph
+    and the second generates the Packet graph.
+
     """
-    # JSON file with device login information
+    # JSON file passed in as first argument with device login information
     device_info_file = sys.argv[1]
-    # Interface Index Number
+    # Interface Index Number passed in as second argument
     int_index = sys.argv[2]
-    # polling interval in seconds
+    # polling interval in seconds passed in as third argument
     time_interval = float(sys.argv[3])
     # Maximum Monitor Time in seconds
     # One hour 3600 seconds
@@ -98,24 +118,23 @@ def main():
     DEBUG = True
 
 
-
     # Establish the time in a string to append to the JSON file that wills ve the
     # data returned from get_snmp3_info
     timestr = time.strftime("%Y%m%d-%H%M%S")
-    #print timestr
-
 
     t = 0
     oid_list = ["ifDescr", "ifInOctets", "ifInUcastPkts", "ifOutOctets", "ifOutUcastPkts"]
 
     device_info_payload = w3_01_FindConfChg.load_json(device_info_file)
 
+    # Initialize variables
     list_of_all_gets = []
-
     inOct = []
     outOct = []
+    graph_dict = {}
 
 
+    # Get all the SNMP Data defined in the OIDs file and store in a list of dictionaries
     while t <= max_monitor_interval:
 
         print "============= Data at: " + time.ctime()
@@ -126,13 +145,11 @@ def main():
         #print current_data
         time.sleep(time_interval)
         t = t + time_interval
-        graph_dict = {}
 
         list_of_all_gets.append(current_data)
 
-    # print list_of_all_gets
-    # print len(list_of_all_gets)
 
+    # save all the GET Data
     save2json(list_of_all_gets)
 
     # In minutes if time interval > 60
@@ -141,14 +158,18 @@ def main():
     else:
         xlabels = range(0, int((max_monitor_interval + time_interval)/60), int(time_interval/60))
 
-
-    #  Graph of input and output octets
+    # The following two sections utilize the GET data gathered from above and the calculated X Axis labels
+    # This should be a function but I was too lazy
+    # Have I mentioned how much I hate SNMP?
+    # Here is a Sunday afternoon I'm never getting back!
+    ####################################################################
+    # Graph of input and output octets
     # "ifInOctets": "1.3.6.1.2.1.2.2.1.10.9",
     # "ifOutOctets": "1.3.6.1.2.1.2.2.1.16.9",
 
-
     graph_dict.clear()
 
+    # Get the device name and interface description from the first element (should be the same for all in this version)
     title = "In/Out Octets for " + list_of_all_gets[0]['sysName'] + " interface " + list_of_all_gets[0]['ifDescr']
     filename = "In-Out-Octets-" + list_of_all_gets[0]['sysName'] + "-intindx" + int_index + ".svg"
 
@@ -162,7 +183,8 @@ def main():
             if key.strip() == 'ifOutOctets':
                 outOct.append(int(value))
 
-
+    # Load the Graphing Dictionary with a key value pair where the key is the OID name and
+    # the value is a list of integer values for that OID
     graph_dict['ifInOctets'] = inOct
     graph_dict['ifOutOctets'] = outOct
 
@@ -178,6 +200,7 @@ def main():
     #pygal_plot(dict_of_lists, title, x_labels, output_filename)
     pygal_plot(graph_dict, title, xlabels, filename)
 
+    ####################################################################
     #  Graph of input and output uncast packets
     # ifInUcastPkts
     # ifOutUcastPkts

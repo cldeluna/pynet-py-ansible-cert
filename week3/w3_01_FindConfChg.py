@@ -20,14 +20,14 @@ import smtplib
 
 def load_json(file):
 
-    # Load the device or other information from the specified JSON file provided as the first argument to the script
-    # Sample Format:
+    # Load the device or other information from the specified JSON file of key: value pairs
+    # provided as the first argument to the script
+    # Sample Format for device information file:
     # [{"ip":"10.1.10.100","a_user":"cisco","auth_key":"cisco123","encr_key":"cisco123","snmp_port":161}]
     # Data structure is a list of dictionaries so that multiple devices can be provided (future)
 
     with open(file) as json_data:
         data = json.load(json_data)
-        #print(data)
 
     # Return list of dictionaries
     return data
@@ -35,44 +35,35 @@ def load_json(file):
 
 def get_snmp3_info(dev_info):
 
-    # Using the device information pulled out of a JSON file
-    # and using the OIDs from JSON file oids.json
+    # Using the device information pulled out of a JSON file (see load_json function)
+    # and using the OIDs from JSON file oids.json (see load_json function)
     # Use SNMPv3 to obtain the values of those oids and store them in a dictionary
     # whose keys are the oid name (keys from oids.json file)
 
     snmp_dict = {}
 
-    #print dev_info
-    #print type(dev_info)
-
+    # Load the OIDs to GET from a JSON file
+    # Note: Feature enhancement: pass this as an argument or keyboard input
     oids = load_json('oids.json')
 
-    #print oids
-    #print type(oids)
-    #print '*' * 40
-
+    # Set all device variables, IP dress, Device IP and SNMP Port, and SNMPv3 User information
     ip = dev_info['ip']
-    #print ip
     dev = [dev_info['ip'], dev_info['snmp_port']]
-    #print dev
     user = [dev_info['a_user'], dev_info['auth_key'], dev_info['encr_key']]
 
 
+    # For each key in the dictionary of OIDs perform an SNMPv3 GET
     for o in oids.keys():
         snmp_data = snmp_helper.snmp_get_oid_v3(dev, user, oid=oids[o], auth_proto='sha', encrypt_proto='des')
-        #print(snmp_data)
-
-    # snmp_get_oid_v3(snmp_device, snmp_user, oid='.1.3.6.1.2.1.1.1.0', auth_proto='sha',
-    #               encrypt_proto='aes128', display_errors=True):
-
 
         output = snmp_helper.snmp_extract(snmp_data)
-        #print output
 
+        # Build a dictionary of SNMP key:value pairs using OIDs in the JSON file
+        # and the actual value from the GET function
         snmp_dict[o] = output
 
+    # add an additional key:value pair of the current time in epoch seconds for future calculations
     snmp_dict['time'] = time.time()
-    #print snmp_dict
 
     # Return dictionary of key:value pairs
     return snmp_dict
@@ -104,27 +95,28 @@ def compare_ccmHistory(oid_list, base, curr):
     # for other comparisons
     #oid_list = ['sysUpTime', 'RunLastChanged', 'RunLastSaved', 'StartLastChanged']
 
+    # Initialize a dictionary of delta values
     delta_dict = {}
-
-    #print len(oid_list)
 
     for key in oid_list:
 
-        #print "*************"
-        #print key
+        # Boolean to enable or disable printing
+        DEBUG = False
 
+        # determine the delta value between the current value and the baseline value
         delta = int(curr[key]) - int(base[key])
+        # Calculate the delta Update time in seconds
         up_sec = delta/100
+        # Calculate the delta Update time in minutes
         up_min = up_sec/60
 
-        # print "=========" + item + "========="
-        # print delta
-        # print up_sec
-        # print up_min
+        if DEBUG:
+            print "=========" + item + "========="
+            print delta
+            print up_sec
+            print up_min
 
         delta_dict.update({key: up_min})
-
-    #print delta_dict
 
     return delta_dict
 
@@ -141,25 +133,16 @@ def compare_iods(oid_list, base, curr):
     # for other comparisons
     #oid_list = ['sysUpTime', 'RunLastChanged', 'RunLastSaved', 'StartLastChanged']
 
+    # Initialize a dictionary of delta values
     delta_dict = {}
-
-    #print len(oid_list)
 
     # The items in the oid list will become keys in the returned dictionary
     for key in oid_list:
 
-        #print "*************"
-        #print key
-
         # This assumes that values increment up
         delta = int(curr[key]) - int(base[key])
 
-        # print "=========" + item + "========="
-        # print delta
-
         delta_dict.update({key: delta})
-
-    #print delta_dict
 
     return delta_dict
 
@@ -193,8 +176,40 @@ def sendemail(from_addr, to_addr_list, cc_addr_list,
 # Provided main() calls the above functions
 def main():
     """
-    Description
-    :return:
+    This script takes two arguments, a JSON file with all the information required to establish and
+    SNMP session to one (or more in the future) device and an action.
+
+    Action:
+
+    "snapshot" results in a "snapshot" of all the OIDs in the JSON file "oids.json" which is saved to
+    a file.
+    "check" results in the latest snapshot file in the directory being selected and loaded in to a
+    "snapshot" dictionary, all variables are refreshed and loaded into a current dictionary and
+    comparisons are made.  A series of if statements are processed to build out a message as to what,
+    if any, changes have ocurred since the snapshot along with the time of the snapshot and the
+    approximate time of the change based on the sysUptime delta.
+
+    Both actions use the get_snmp3_info function.  Snapshot saves it to a file.  Check saves it to a
+    variable for comparison with the loaded data from the snapshot Json file.
+
+    During the snapshot action one of the key:value pairs saved is the time using the time.time()
+    function.  That allows us to correlate time wiht sysUpTime.
+    During the check function the current sysUpTime is added to the snapshot time and converted using
+    time.ctime(snapshot.time + curr.time) to derive the approximate time of the change.  I'm sure
+    there is a better way to do this as tihs has many flaws including needed the sysUpTime to be
+    uninterrupted.  This fails if the router is rebooted between the snapshot and the check actions.
+
+    Email is sent in the event of a change (which is a boolean set if any (or all) of the ccmHistory
+    values changed.
+
+    Google email was selected for this project
+
+    Enhancement:  I strip these but I should lower as well.  I don't do alot of error checking
+    particulary with respect to file handling.
+
+    Lesson Learned:  Use underscores for file names! Otherwise not a valid module name
+    when you want to import it into another scipt
+
     """
 
     device_info_file = sys.argv[1]
@@ -202,14 +217,10 @@ def main():
 
 
     device_info_payload = load_json(device_info_file)
-    #print device_info_payload
-    #print len(device_info_payload)
-    #print type(device_info_payload)
+
 
     # Current script only processes one device
     if len(device_info_payload) == 1:
-
-        #print "proceed"
 
         if action.strip() == 'baseline':
             print "\nACTION IS BASELINE"
@@ -218,7 +229,7 @@ def main():
             # Establish the time in a string to append to the JSON file that wills ve the
             # data returned from get_snmp3_info
             timestr = time.strftime("%Y%m%d-%H%M%S")
-            #print timestr
+
 
             # Build filename based on the name of the device, the fact that it is
             # generated as a bseline, and a timestamp
@@ -245,7 +256,6 @@ def main():
             # Note: This needs some work..it should only look for files with the
             # workd baseline and a timestamp in them.  Should build RegEx for this
             newest = max(glob.iglob('*.[Jj]son'), key=os.path.getctime)
-            #print newest
 
             # Load the baseline data
             baseline_data = load_json(newest)
@@ -275,17 +285,14 @@ def main():
             # so we know if we need to email
             if change_dict['RunLastChanged'] > 0:
                 msg1 = "\nRunning Configuration changed.  Delta Value: " + str(change_dict['RunLastChanged'])
-                #print msg1
-                # print "++++++++++++"
-                # print baseline_data['time']
-                # print change_dict['sysUpTime']
+
                 # Add the sysUptime delta to the time from the baseline to get approx time of change
                 update_time_epoch = baseline_data['time'] + (60*change_dict['sysUpTime'])
-                #print update_time_epoch
+
 
                 # Convert epoch time to human readable time
                 update_time = time.ctime(update_time_epoch)
-                #print update_time
+
 
                 msg1 = "\nRunning Configuration changed at approximately " + update_time + ".  Delta Value: " + str(change_dict['RunLastChanged'])
                 changed = True
