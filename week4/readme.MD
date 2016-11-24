@@ -1,7 +1,30 @@
-#Week 4
+#Week 4  [PyNet Python + Ansible] - Class4 / Paramiko, Pexpect, Netmiko
 
 
-`pplied_python)[cdeluna@ip-172-30-0-7 week4]$ python week4.py -a > Week4-FullRunReport.txt
+
+D:\Dropbox (Indigo Wire Networks)\scripts\python\2016\PyNetACert\week4>python week4.py -h
+usage: week4.py [-h] [-a] [-1] [-2] [-3] [-4] [-5] [-6] [-7] [-8]
+
+PyNet Python + Ansible Course - Week 4 Excercises
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -a, --all   Execute all exercises in week 4 assignment
+  -1, --ex1   Execute Exercise 1
+  -2, --ex2   Execute Exercise 2
+  -3, --ex3   Execute Exercise 3
+  -4, --ex4   Execute Exercise 4
+  -5, --ex5   Execute Exercise 5
+  -6, --ex6   Execute Exercise 6
+  -7, --ex7   Execute Exercise 7
+  -8, --ex8   Execute Exercise 8
+
+Usage: 'python week4.py -a' to execute all exercises, 'python week4.py -1' to
+execute exercise 1
+
+```
+
+pplied_python)[cdeluna@ip-172-30-0-7 week4]$ python week4.py -a > Week4-FullRunReport.txt
 (applied_python)[cdeluna@ip-172-30-0-7 week4]$ ls
 config_file.txt  test.py  Week4-FullRunReport.txt  week4.py
 (applied_python)[cdeluna@ip-172-30-0-7 week4]$ cat Week4-FullRunReport.txt 
@@ -201,7 +224,7 @@ License Information for 'c880-data'
 	logging count
 	logging buffered 12000
 	no logging console
-	``
+	
 
 
 
