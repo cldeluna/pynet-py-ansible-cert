@@ -1,6 +1,6 @@
 #Week 4  [PyNet Python + Ansible] - Class4 / Paramiko, Pexpect, Netmiko
 
-
+```
 
 D:\Dropbox (Indigo Wire Networks)\scripts\python\2016\PyNetACert\week4>python week4.py -h
 usage: week4.py [-h] [-a] [-1] [-2] [-3] [-4] [-5] [-6] [-7] [-8]
@@ -21,6 +21,9 @@ optional arguments:
 
 Usage: 'python week4.py -a' to execute all exercises, 'python week4.py -1' to
 execute exercise 1
+```
+
+## Complete run using the -a option
 
 ```
 
