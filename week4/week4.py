@@ -160,8 +160,8 @@ def netm_cmd(conn_obj, cmd, configfile, mode):
 
 def main():
 
-    #device = 'pynet-rtr2'
-    device = 'arctic-sw01'
+    device = 'pynet-rtr2'
+    #device = 'arctic-sw01'
 
     pynet_devices = {
         "pynet-rtr1": {
@@ -275,7 +275,7 @@ def main():
         },
         "juniper-srx" : {
             "username": "pyclass",
-            "ip": "50.76.53.27",
+            "ip": "184.105.247.76",
             "device_type": "juniper",
             "password": "88newclass",
             "secret": ''
@@ -301,8 +301,8 @@ def main():
     # 6. Use Netmiko to execute 'show arp' on pynet-rtr1, pynet-rtr2, and juniper-srx.
     if arguments.all or arguments.ex6:
 
-        list_of_devices = ["arctic-sw01"]
-        #list_of_devices = ["pynet-rtr1", "pynet-rtr2", "juniper-srx"]
+        #list_of_devices = ["arctic-sw01"]
+        list_of_devices = ["pynet-rtr1", "pynet-rtr2", "juniper-srx"]
         print "\nExecuting exercise 6 - Use Netmiko to execute show arp on " + str(list_of_devices) + "."
 
         for dev in list_of_devices:
@@ -341,8 +341,8 @@ def main():
     # (no logging console) from a file on both pynet-rtr1 and pynet-rtr2 (see 'Errata and Other Info, item #4).
     if arguments.all or arguments.ex8:
 
-        # list_of_devices = ["pynet-rtr1", "pynet-rtr2"]
-        list_of_devices = ["arctic-sw01"]
+        list_of_devices = ["pynet-rtr1", "pynet-rtr2"]
+        #list_of_devices = ["arctic-sw01"]
         configfile = 'config_file.txt'
 
         print "\nExecuting exercise 8 - Use Netmiko to change the configuration on " + str(list_of_devices) + " using a file."
@@ -364,7 +364,7 @@ def main():
                 print "\nSending commands from file: " + configfile
                 output = netm_cmd(netmiko_connection, command, configfile, 'cmdfile')
 
-                command = "show run | inc logging buff"
+                command = "show run | inc logging"
                 print "\nSending command: " + command
                 output = netm_cmd(netmiko_connection, command, '', 'priv')
                 print output
