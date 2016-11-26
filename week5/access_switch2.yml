@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Generate access switch configuration files
+    template: src=./access_switch2.j2
+                dest=./CFG2/{{item.hostname}}.cfg
+    with_items:
+      - {hostname: cdl-rtr1, secret: cisco, access_vlan: 33, ip_addr: 1.1.1.11, snmp_community: "asdfjkl", default_gateway: 1.1.1.1, snmpv3: True}
+      - {hostname: cdl-rtr2, secret: cisco, access_vlan: 33, ip_addr: 1.1.2.12, snmp_community: "asdfjkl", default_gateway: 1.1.2.1, snmpv3: False}
+      - {hostname: cdl-rtr3, secret: cisco, access_vlan: 33, ip_addr: 1.1.3.13, snmp_community: "asdfjkl", default_gateway: 1.1.3.1, snmpv3: True}
+      - {hostname: cdl-rtr4, secret: cisco, access_vlan: 33, ip_addr: 1.1.4.14, snmp_community: "asdfjkl", default_gateway: 1.1.4.1, snmpv3: False}
+      - {hostname: cdl-rtr5, secret: cisco, access_vlan: 33, ip_addr: 1.1.5.15, snmp_community: "asdfjkl", default_gateway: 1.1.5.1, snmpv3: True}
