@@ -1,0 +1,45 @@
+---
+
+# Using Ansible, configure three VLANs on the Arista switch specifying both the VLAN IDs and the VLAN names.  
+# For the VLAN IDs randomly pick three numbers between 100 and 999.
+
+- name: Create Arista Vlans by Claudia
+  hosts: arista
+  gather_facts: False
+
+  tasks:
+    - name: create Vlan 991
+      eos_vlan: name=99ONE vlanid=991
+            username={{ eapi_username }}
+            password={{ eapi_password }}
+            host={{ eapi_hostname }}
+            port={{ eapi_port }}
+            transport=https
+
+      register: vlan_out
+      
+    - debug: var=vlan_out    
+
+    - name: create Vlan 992
+      eos_vlan: name=99TWO vlanid=992
+            username={{ eapi_username }}
+            password={{ eapi_password }}
+            host={{ eapi_hostname }}
+            port={{ eapi_port }}
+            transport=https
+
+      register: vlan_out
+
+    - debug: var=vlan_out
+
+    - name: create Vlan 993
+      eos_vlan: name=99THREE vlanid=993
+            username={{ eapi_username }}
+            password={{ eapi_password }}
+            host={{ eapi_hostname }}
+            port={{ eapi_port }}
+            transport=https
+
+      register: vlan_out
+
+    - debug: var=vlan_out

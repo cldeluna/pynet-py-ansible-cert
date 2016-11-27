@@ -1,0 +1,26 @@
+---
+
+
+# 5. Use the cisco_file_transfer.py module to transfer a small file to the Cisco pynet-rtr1 router.
+
+- name: Transfer file to Cisco Router
+  hosts: pynet-rtr1
+  gather_facts: False
+
+  tasks:
+    - name: Testing File Transfer
+      cisco_file_transfer: 
+            source_file="/home/cdeluna/PyNetACert/week6/cisco_acl.txt"
+            dest_file="cdl_cisco_acl.txt"
+            overwrite=true
+            enable_scp=true
+            host={{ host }}
+            port={{ port }}
+            username={{ username }}
+            password={{ password }}
+        
+
+      register: file_output
+
+    - debug: var=file_output  
+

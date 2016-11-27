@@ -1,0 +1,8 @@
+no access-list 1
+access-list 1 remark Use ACL1 for comments specific for this switch
+remark Site: UWACO North America
+remark Building: A
+remark Floor: Basement
+remark Cabinet: 1
+remark Version: 3850 Access Base Switch Template v1.4
+remark Contact: claudia@indigowire.net

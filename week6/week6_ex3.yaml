@@ -1,0 +1,50 @@
+---
+
+
+### 3. Use Ansible to configure your 'primary Ethernet interface' as follows:
+
+#switchport mode:           trunk
+#trunk native VLAN:        VLAN1
+#trunk allowed VLANs:   991,992,993,994
+
+- name: Configure Arista Trunk Interface by Claudia
+  hosts: arista
+  gather_facts: False
+
+  tasks:
+    - name: Default Interface
+      eos_config: command="default interface Ethernet6"
+            username={{ eapi_username }}
+            password={{ eapi_password }}
+            host={{ eapi_hostname }}
+            port={{ eapi_port }}
+            transport=https
+
+      register: int_output
+
+    - debug: var=int_output  
+
+    - name: Configure Primary Ethernet Interface Description
+      eos_interface: name={{ item.int }} description={{ item.desc }}
+            username={{ eapi_username }}
+            password={{ eapi_password }}
+            host={{ eapi_hostname }}
+            port={{ eapi_port }}
+            transport=https
+
+      with_items:
+        - { int: Ethernet6, desc: "*** TRUNK ***"}
+
+    - name: Configure Primary Ethernet Interface Trunk Characteristics
+      eos_switchport: name={{ item.int }} mode=trunk trunk_allowed_vlans={{ item.vlanids }}
+            username={{ eapi_username }}
+            password={{ eapi_password }}
+            host={{ eapi_hostname }}
+            port={{ eapi_port }}
+            transport=https
+
+
+      with_items:
+        - { int: Ethernet6, vlanids: "991,992,993,994"}
+
+

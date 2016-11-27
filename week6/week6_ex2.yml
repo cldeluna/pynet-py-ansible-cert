@@ -1,0 +1,38 @@
+---
+
+# Exercise 2: Use Ansible to configure your 'primary Ethernet interface' as follows:  
+#interface description:     *** IN USE ***
+#switchport mode:          access
+#VLAN:                           <one of the VLANs created in exercise1>
+
+
+
+- name: Configure Arista Interface by Claudia
+  hosts: arista
+  gather_facts: False
+
+  tasks:
+    - name: Configure Primary Ethernet Interface Description
+      eos_interface: name={{ item.int }} description={{ item.desc }}
+            username={{ eapi_username }}
+            password={{ eapi_password }}
+            host={{ eapi_hostname }}
+            port={{ eapi_port }}
+            transport=https
+
+      with_items:
+        - { int: Ethernet6, desc: "*** IN USE ***", vlanid: 991}
+
+    - name: Configure Primary Ethernet Interface Characteristics
+      eos_switchport: name={{ item.int }} mode=access access_vlan={{ item.vlanid }}
+            username={{ eapi_username }}
+            password={{ eapi_password }}
+            host={{ eapi_hostname }}
+            port={{ eapi_port }}
+            transport=https
+
+
+      with_items:
+        - { int: Ethernet6, desc: "*** IN USE ***", vlanid: 991}
+
+
