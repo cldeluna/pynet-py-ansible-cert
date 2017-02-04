@@ -33,8 +33,6 @@ def main():
 
     sh_int_dict = sh_int[0]
 
-    sh_int_dict_keys = sh_int_dict.keys()
-
     sh_int_result = sh_int_dict['result']
 
     sh_int_ints = sh_int_result['interfaces']
