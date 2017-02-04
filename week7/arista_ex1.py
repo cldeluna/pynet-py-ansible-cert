@@ -65,24 +65,25 @@ def main():
     #print int_keys
 
     for key in int_keys:
-        #print "++++++++++++++++++++"
-        #print sh_int_ints[key]
-        #print type(sh_int_ints[key])
-        #print "+++++++----++++++++++"
-        # Ethernet X
-        print("==== " + str(sh_int_ints[key]['name'])+ " ===")
-        #print sh_int_ints[key]['interfaceCounters']['inputErrorsDetail']
-        #pp(sh_int_ints[key]['interfaceCounters']['inOctets'])
-        #pp(sh_int_ints[key]['interfaceStatistics'])
-        #print "--------------------"
-        #print sh_int_ints[key].keys()
-        #print sh_int_ints[key]['inOctets']
-        #print sh_int_ints[key]['outOctets']
+        if "Vlan" not in key:
+            #print "++++++++++++++++++++"
+            #print sh_int_ints[key]
+            #print type(sh_int_ints[key])
+            #print "+++++++----++++++++++"
+            # Ethernet X
+            print("==== " + str(sh_int_ints[key]['name'])+ " ===")
+            #print sh_int_ints[key]['interfaceCounters']['inputErrorsDetail']
+            #pp(sh_int_ints[key]['interfaceCounters']['inOctets'])
+            #pp(sh_int_ints[key]['interfaceStatistics'])
+            #print "--------------------"
+            #print sh_int_ints[key].keys()
+            #print sh_int_ints[key]['inOctets']
+            #print sh_int_ints[key]['outOctets']
 
-        print("=========================")
-        print("inOctets: " + str(sh_int_ints[key]['interfaceCounters']['inOctets']))
-        print("outOctets: " + str(sh_int_ints[key]['interfaceCounters']['outOctets']))
-        print("=========================")
+            print("=========================")
+            print("inOctets: " + str(sh_int_ints[key]['interfaceCounters']['inOctets']))
+            print("outOctets: " + str(sh_int_ints[key]['interfaceCounters']['outOctets']))
+            print("=========================")
 
 # Standard call to the main() function.
 if __name__ == '__main__':
