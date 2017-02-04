@@ -51,41 +51,18 @@ def main():
     :return:
     """
 
-    device_name = "veos-cs01"
+    device_name = "pynet-sw2"
     dev_conn = pyeapi.connect_to(device_name)
 
-    parser = argparse.ArgumentParser()
-    #print("parser: " + str(parser))
 
-    parser.add_argument('--name', action='store', dest='name_num',
-                        help='Provide the name and the number of the Vlan to add if it does not exist usint the format VLANNAME_VLANNUMBER')
-
-    parser.add_argument('--remove', action='store', dest='rem_vlan_num',
-                        help='Store the number of the Vlan to remove if it exists')
-
-    parser.add_argument('--verify', action='store', dest='check_vlan_num',
-                        help='Store the number of the Vlan to check')
-
-    parser.add_argument('--device', action='store_true', default=False, dest='display_device_value',
-                        help='Set to True to display the device that is being worked on')
-
-    parser.add_argument('--version', action='version', version='%(prog)s 1.0')
-
-    results = parser.parse_args()
-    #print("results: " + str(results))
-
-    #print 'name_num         =', results.name_num
-    #print 'rem_vlan_num     =', results.rem_vlan_num
-    #print 'check_vlan_num   =', results.check_vlan_num
 
     # Process option to add a vlan including name
     if results.name_num:
         add_vlan = results.name_num.split('_')
-        #print('add_vlan: ' + str(add_vlan))
         add_vlan_name = add_vlan[0]
         add_vlan_num = add_vlan[1]
         vlan_found = check_vlan(add_vlan_num, dev_conn)
-        #print("Vlan found: " + str(vlan_found))
+
 
         if vlan_found:
             print("Vlan " + add_vlan_num + " is ALREADY configured on device " + device_name + " and so no action is required.")
@@ -136,9 +113,25 @@ def main():
 
 # Standard call to the main() function.
 if __name__ == '__main__':
-    #if len(sys.argv) != 2:
-        #print '\nUsage: arista_ex2.py <what are the argumentsr>\nExample: python arista_ex2.py "arguments"\n\n'
-        #sys.exit()
-    #else:
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--name', action='store', dest='name_num',
+                        help='Provide the name and the number of the Vlan to add if it does not exist usint the format VLANNAME_VLANNUMBER')
+
+    parser.add_argument('--remove', action='store', dest='rem_vlan_num',
+                        help='Store the number of the Vlan to remove if it exists')
+
+    parser.add_argument('--verify', action='store', dest='check_vlan_num',
+                        help='Store the number of the Vlan to check')
+
+    parser.add_argument('--device', action='store_true', default=False, dest='display_device_value',
+                        help='Set to True to display the device that is being worked on')
+
+    parser.add_argument('--version', action='version', version='%(prog)s 1.0')
+
+    results = parser.parse_args()
+
+
     main()
 
