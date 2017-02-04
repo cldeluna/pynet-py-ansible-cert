@@ -17,7 +17,6 @@ from pprint import pprint as pp
 
 # Provided main() calls the above functions
 def main():
-    # Take path argument and list all text files
     """
     Use Arista's eAPI to obtain 'show interfaces' from the switch.  Parse the 'show
     interfaces' output to obtain the 'inOctets' and 'outOctets' fields for each of
@@ -30,55 +29,22 @@ def main():
 
     node = pyeapi.connect_to(sw_node)
 
-    #pp(node.enable('show version'))
-
     sh_int = node.enable('show interfaces')
 
-    #pp(sh_int)
-    #print type(sh_int)
-    #print len(sh_int)
-    #print "****************"
-
     sh_int_dict = sh_int[0]
-    #print type(sh_int_dict)
-    #print len(sh_int_dict)
-    #print "----------------"
-
-    #pp(sh_int_dict)
 
     sh_int_dict_keys = sh_int_dict.keys()
 
-    #print sh_int_dict_keys
-
     sh_int_result = sh_int_dict['result']
 
-    #print type(sh_int_result)
-    #print len(sh_int_result)
-    #print sh_int_result.keys()
-    #pp(sh_int_result)
-
     sh_int_ints = sh_int_result['interfaces']
-    #print type(sh_int_ints)
-    #print sh_int_ints.keys()
 
     int_keys = sh_int_ints.keys()
-    #print int_keys
 
     for key in int_keys:
         if "Vlan" not in key:
-            #print "++++++++++++++++++++"
-            #print sh_int_ints[key]
-            #print type(sh_int_ints[key])
-            #print "+++++++----++++++++++"
-            # Ethernet X
+
             print("==== " + str(sh_int_ints[key]['name'])+ " ===")
-            #print sh_int_ints[key]['interfaceCounters']['inputErrorsDetail']
-            #pp(sh_int_ints[key]['interfaceCounters']['inOctets'])
-            #pp(sh_int_ints[key]['interfaceStatistics'])
-            #print "--------------------"
-            #print sh_int_ints[key].keys()
-            #print sh_int_ints[key]['inOctets']
-            #print sh_int_ints[key]['outOctets']
 
             print("=========================")
             print("inOctets: " + str(sh_int_ints[key]['interfaceCounters']['inOctets']))
@@ -88,7 +54,7 @@ def main():
 # Standard call to the main() function.
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print '\nUsage: arista_ex1.py <what are the argumentsr>\nExample: python arista_ex1.py "arguments"\n\n'
+        print '\nUsage: arista_ex1.py <what are the argumentsr>\nExample: python arista_ex1.py "veos-sw1"\n\n'
         sys.exit()
     else:
         main()
