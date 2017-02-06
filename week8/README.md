@@ -743,3 +743,247 @@ Multi Threaded Time: 0:00:10.987360
 
 
 ```
+
+
+## Exercise 8 - Using Process Queue to handle output
+
+```
+(applied_python)[cdeluna@ip-172-30-0-7 week8]$ python wk8_db_th_proc.py -8
+-------------------------------
+Database Objects to Connect to.
+-------------------------------
+
+Network Devices
+pynet-rtr1
+pynet-rtr2
+pynet-sw1
+pynet-sw2
+pynet-sw3
+pynet-sw4
+juniper-srx
+
+Network Device Credentials
+pyclass
+admin1
+-------------------------------
+
+
+Show command to execute on each device (default is show version): 
+<Process(Process-1, started)>
+<Process(Process-2, stopped)>
+<Process(Process-3, started)>
+<Process(Process-4, started)>
+<Process(Process-5, stopped)>
+<Process(Process-6, started)>
+<Process(Process-7, stopped)>
+pynet-rtr2
+======================================================
+Executing command <show version> on device pynet-rtr2
+======================================================
+Cisco IOS Software, C880 Software (C880DATA-UNIVERSALK9-M), Version 15.4(2)T1, RELEASE SOFTWARE (fc3)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Thu 26-Jun-14 14:15 by prod_rel_team
+
+ROM: System Bootstrap, Version 12.4(22r)YB5, RELEASE SOFTWARE (fc1)
+
+pynet-rtr2 uptime is 30 weeks, 3 days, 6 hours, 31 minutes
+System returned to ROM by reload at 19:10:00 UTC Thu Jul 7 2016
+System restarted at 12:35:53 PDT Thu Jul 7 2016
+System image file is "flash:c880data-universalk9-mz.154-2.T1.bin"
+Last reload type: Normal Reload
+Last reload reason: Reload Command
+
+
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+Cisco 881 (MPC8300) processor (revision 1.0) with 236544K/25600K bytes of memory.
+Processor board ID FTX18298312
+
+5 FastEthernet interfaces
+1 Virtual Private Network (VPN) Module
+256K bytes of non-volatile configuration memory.
+125440K bytes of ATA CompactFlash (Read/Write)
+
+
+License Info:
+
+License UDI:
+
+-------------------------------------------------
+Device#	  PID			SN
+-------------------------------------------------
+*0  	  CISCO881-K9           FTX18298312     
+
+
+
+License Information for 'c880-data'
+    License Level: advsecurity   Type: Permanent
+    Next reboot license Level: advsecurity
+
+
+Configuration register is 0x2102
+
+pynet-rtr1
+======================================================
+Executing command <show version> on device pynet-rtr1
+======================================================
+Cisco IOS Software, C880 Software (C880DATA-UNIVERSALK9-M), Version 15.4(2)T1, RELEASE SOFTWARE (fc3)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Thu 26-Jun-14 14:15 by prod_rel_team
+
+ROM: System Bootstrap, Version 12.4(22r)YB5, RELEASE SOFTWARE (fc1)
+
+pynet-rtr1 uptime is 32 weeks, 4 days, 6 hours, 25 minutes
+System returned to ROM by reload
+System restarted at 12:42:49 PDT Wed Jun 22 2016
+System image file is "flash:c880data-universalk9-mz.154-2.T1.bin"
+Last reload type: Normal Reload
+Last reload reason: power-on
+
+
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+Cisco 881 (MPC8300) processor (revision 1.0) with 236544K/25600K bytes of memory.
+Processor board ID FTX1512038X
+
+5 FastEthernet interfaces
+1 Virtual Private Network (VPN) Module
+256K bytes of non-volatile configuration memory.
+126000K bytes of ATA CompactFlash (Read/Write)
+
+
+License Info:
+
+License UDI:
+
+-------------------------------------------------
+Device#	  PID			SN
+-------------------------------------------------
+*0  	  CISCO881-SEC-K9       FTX1512038X     
+
+
+
+License Information for 'c880-data'
+    License Level: advipservices   Type: Permanent
+    Next reboot license Level: advipservices
+
+
+Configuration register is 0x2102
+
+juniper-srx
+=======================================================
+Executing command <show version> on device juniper-srx
+=======================================================
+
+Hostname: pynet-jnpr-srx1
+Model: srx100h2
+JUNOS Software Release [12.1X44-D35.5]
+
+pynet-sw1
+=====================================================
+Executing command <show version> on device pynet-sw1
+=====================================================
+Arista vEOS
+Hardware version:    
+Serial number:       
+System MAC address:  5254.aba8.9aea
+
+Software image version: 4.15.4F
+Architecture:           i386
+Internal build version: 4.15.4F-2923910.4154F
+Internal build ID:      d8a3c846-c735-4766-93cd-82bb7427da51
+
+Uptime:                 4 weeks, 3 days, 2 hours and 2 minutes
+Total memory:           3893916 kB
+Free memory:            1321952 kB
+
+pynet-sw3
+=====================================================
+Executing command <show version> on device pynet-sw3
+=====================================================
+Arista vEOS
+Hardware version:    
+Serial number:       
+System MAC address:  5254.ab71.e119
+
+Software image version: 4.15.4F
+Architecture:           i386
+Internal build version: 4.15.4F-2923910.4154F
+Internal build ID:      d8a3c846-c735-4766-93cd-82bb7427da51
+
+Uptime:                 4 weeks, 3 days, 2 hours and 2 minutes
+Total memory:           3893916 kB
+Free memory:            1287728 kB
+
+pynet-sw2
+=====================================================
+Executing command <show version> on device pynet-sw2
+=====================================================
+Arista vEOS
+Hardware version:    
+Serial number:       
+System MAC address:  5254.abbe.5b7b
+
+Software image version: 4.15.4F
+Architecture:           i386
+Internal build version: 4.15.4F-2923910.4154F
+Internal build ID:      d8a3c846-c735-4766-93cd-82bb7427da51
+
+Uptime:                 4 weeks, 3 days, 2 hours and 2 minutes
+Total memory:           3893916 kB
+Free memory:            1296044 kB
+
+pynet-sw4
+=====================================================
+Executing command <show version> on device pynet-sw4
+=====================================================
+Arista vEOS
+Hardware version:    
+Serial number:       
+System MAC address:  5254.ab81.5693
+
+Software image version: 4.15.4F
+Architecture:           i386
+Internal build version: 4.15.4F-2923910.4154F
+Internal build ID:      d8a3c846-c735-4766-93cd-82bb7427da51
+
+Uptime:                 4 weeks, 3 days, 2 hours and 2 minutes
+Total memory:           3893916 kB
+Free memory:            1287612 kB
+
+Multi Process (with Queue) Elapsed time: 0:00:09.224640
+Single Threaded Time: 0:00:45.968365
+Multi Threaded Time: 0:00:10.987360
+(applied_python)[cdeluna@ip-172-30-0-7 week8]$ 
+
+```

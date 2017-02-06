@@ -22,21 +22,38 @@ from datetime import datetime
 import threading
 import time
 
-# For Exercise 7
-from multiprocessing import Process, current_process
+# For Exercise 7 and 8 (Queue)
+from multiprocessing import Process, current_process, Queue
 
 
-def show_command_single(dev,cmd):
+def show_command_queue(dev, cmd, q):
+
+    output_dict = {}
+    creds = dev.credentials
+    dev_conn = ConnectHandler(device_type=dev.device_type, ip=dev.ip_address, username=creds.username,
+                              password=creds.password, port=dev.port, verbose=False)
+
+    msg = "Executing command <" + cmd + "> on device " + dev.device_name + "\n"
+    output = ("=" * len(msg)) + "\n"
+    output += msg
+    output += ("=" * len(msg)) + "\n"
+
+    output += dev_conn.send_command(cmd)
+    output_dict[dev.device_name] = output
+    q.put(output_dict)
+
+
+def show_command_single(dev, cmd):
 
     creds = dev.credentials
     dev_conn = ConnectHandler(device_type=dev.device_type, ip=dev.ip_address, username=creds.username,
                               password=creds.password, port=dev.port)
 
     msg = "Executing command <" + cmd + "> on device " + dev.device_name
-    print "\n"
-    print "=" * len(msg)
+
+    print ("=" * len(msg)) + "\n"
     print msg
-    print "=" * len(msg)
+    print ("=" * len(msg)) + "\n"
 
     print dev_conn.send_command(cmd)
 
@@ -182,9 +199,10 @@ def main():
     #7. Use processes and Netmiko to execute 'show version' on each device in the database.
     # Calculate the amount of time required to do this.
     # What is the difference in time between executing 'show version' sequentially versus using processes?
-    if arguments.procconnect:
+    if arguments.procconnect or arguments.procconq:
 
         start_time = datetime.now()
+        q = Queue(maxsize=20)
         list_db("Database Objects to Connect to.")
         show_cmd = "show version"
         show_cmd_raw = raw_input("Show command to execute on each device (default is show version): ").strip()
@@ -197,7 +215,10 @@ def main():
         procs = []
         for a_dev in devices:
 
-            dev_proc = Process(target=show_command_single, args=(a_dev, show_cmd))
+            if arguments.procconq:
+                dev_proc = Process(target=show_command_queue, args=(a_dev, show_cmd, q))
+            else:
+                dev_proc = Process(target=show_command_single, args=(a_dev, show_cmd))
             dev_proc.start()
             procs.append(dev_proc)
 
@@ -205,8 +226,15 @@ def main():
             print a_proc
             a_proc.join()
 
+        if arguments.procconq:
+            while not q.empty():
+                my_dict = q.get()
+                for k,v in my_dict.iteritems():
+                    print k
+                    print v
+
         elapsed_time = datetime.now() - start_time
-        print "Multi Process Elapsed time: {}".format(elapsed_time)
+        print "Multi Process (with Queue) Elapsed time: {}".format(elapsed_time)
 
         single_thread_time = "0:00:45.968365"
         print "Single Threaded Time: " + single_thread_time
@@ -229,10 +257,12 @@ if __name__ == '__main__':
     parser.add_argument('-5', '--connect', action='store_true', default=False, help='Week8 Ex5 Connect to devices in DB and execute show command')
     parser.add_argument('-6', '--threadconnect', action='store_true', default=False, help='Week8 Ex6 Connect to devices in DB and execute show command using threads')
     parser.add_argument('-7', '--procconnect', action='store_true', default=False, help='Week8 Ex7 Connect to devices in DB and execute show command using processes.')
+    parser.add_argument('-8', '--procconq', action='store_true', default=False, help='Week8 Ex8 Connect to devices in DB and execute show command using processes and queue.')
 
     parser.add_argument('-l', '--list', action='store_true', default=False, help='Week8 - List DB')
 
     arguments = parser.parse_args()
+
     main()
 
 
