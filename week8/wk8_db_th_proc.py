@@ -108,7 +108,11 @@ def main():
                 port=22,
                 credentials=cred,
             )
-            my_new_dev.save()
+
+            if my_new_dev[1]:
+                print "New Device record was created in DB!"
+            else:
+                print "Device already in DB. No new record created."
 
         else:
             print "NOT checking DB prior to add!"
@@ -119,11 +123,8 @@ def main():
                 port=22,
                 credentials=cred,
             )
-            print type(my_new_dev)
-            print dir(my_new_dev)
             my_new_dev.save()
 
-        print my_new_dev
 
         list_db("Database Objects after ADD")
 
