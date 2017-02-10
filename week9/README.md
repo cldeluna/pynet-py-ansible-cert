@@ -5,8 +5,8 @@
 
 ##1. Create a directory called mytest with three Python modules world.py, simple.py, whatever.py.
 
-     ###a. These three files should each have a function that prints a statement when called
-     ###b. Use the __name__ technique to separate executable code from importable code. Each module should contain executable code.
+###a. These three files should each have a function that prints a statement when called
+###b. Use the __name__ technique to separate executable code from importable code. Each module should contain executable code.
 
 ```
 applied_python)[cdeluna@ip-172-30-0-7 ~]$ ls
@@ -65,7 +65,7 @@ Please enter a singular noun.Copernicus
 ```
 
 
-     ###c. Verify that you are NOT able to import ./mytest 
+###c. Verify that you are NOT able to import ./mytest 
 
 
 ```
@@ -88,8 +88,8 @@ ImportError: No module named whatever
 
 ##2. Make mytest a package.
 
-    ###a. In the __init__.py file import each of the functions in world.py, simple.py, whatever.py.
-    ###b. Test out your package from the Python interpreter shell. Make sure you can invoke your three functions using both 'import mytest' and 'from mytest import func1, func2, func3'. Once again do this from the directory containing ./mytest.
+###a. In the __init__.py file import each of the functions in world.py, simple.py, whatever.py.
+###b. Test out your package from the Python interpreter shell. Make sure you can invoke your three functions using both 'import mytest' and 'from mytest import func1, func2, func3'. Once again do this from the directory containing ./mytest.
 
 ```
 (applied_python)[cdeluna@ip-172-30-0-7 ~]$ ls
@@ -198,8 +198,8 @@ Would you like to add a new word? no
 
 ##4. Create a class MyClass in world.py.
 
-    ###a. This class should require that three variables be passed in upon initialization.
-    ###b. Write two methods associated with this class 'hello' and 'not_hello'. Have both these methods print a statement that uses all three of the initialization variables.
+###a. This class should require that three variables be passed in upon initialization.
+###b. Write two methods associated with this class 'hello' and 'not_hello'. Have both these methods print a statement that uses all three of the initialization variables.
 
 ```
 >python world.py
@@ -430,8 +430,8 @@ Completed
 
 ##9. Write a Python script in a different directory (not the one containing mytest).
 
-    ###a. Verify that you can import mytest and call the three functions func1(), func2(), and func3().
-    ###b. Create an object that uses MyClass. Verify that you call the hello() and not_hello() methods.
+###a. Verify that you can import mytest and call the three functions func1(), func2(), and func3().
+###b. Create an object that uses MyClass. Verify that you call the hello() and not_hello() methods.
 
 ```
 (applied_python)[cdeluna@ip-172-30-0-7 week9]$ python test.py
@@ -491,4 +491,4 @@ None
 ```
 
 
-This was fun and informative!  Thx!
+_This was fun and informative!  Thx!_
