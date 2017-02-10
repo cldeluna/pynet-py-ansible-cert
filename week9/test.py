@@ -24,6 +24,13 @@ def main():
     print "Function 3 from mytest package"
     print mytest.func3()
 
+    print '\n'
+    print "Class MyClass"
+    mc1 = mytest.MyClass("some", "other", "thing")
+
+    print mc1
+    print mc1.hello()
+    print mc1.not_hello()
 
 
 # Standard call to the main() function.
