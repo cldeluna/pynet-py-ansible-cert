@@ -89,7 +89,7 @@ ImportError: No module named whatever
 ##2. Make mytest a package.
 
 ###a. In the __init__.py file import each of the functions in world.py, simple.py, whatever.py.
-###b. Test out your package from the Python interpreter shell. Make sure you can invoke your three functions using both 'import mytest' and 'from mytest import func1, func2, func3'. Once again do this from the directory containing ./mytest.
+###b. Test out your package from the Python interpreter shell. Use both types of import methods
 
 ```
 (applied_python)[cdeluna@ip-172-30-0-7 ~]$ ls
@@ -158,10 +158,9 @@ Would you like to add a new word? no
 
 
 
-##3. Add a __all__ variable to your __init__.py file.
+##3. Add a __all__ variable 
 
-Test out __all__ using 'from mytest import *'. Verify that you can directly execute func1(), func2(), func3(). Once again do this from the directory containing ./mytest.
-
+Test out __all__ using 'from mytest import *'. Verify.
 
 Works as expected
 
@@ -199,7 +198,7 @@ Would you like to add a new word? no
 ##4. Create a class MyClass in world.py.
 
 ###a. This class should require that three variables be passed in upon initialization.
-###b. Write two methods associated with this class 'hello' and 'not_hello'. Have both these methods print a statement that uses all three of the initialization variables.
+###b. Write two methods associated with this class 'hello' and 'not_hello'. 
 
 ```
 >python world.py
@@ -288,7 +287,7 @@ None
 
 
 
-##6. Optional bonus question -- have MyChildClass augment the __init__() method. In other words, the child class should do something additional in the __init__() method yet still call its parent class __init__().
+##6. Optional bonus question 
 
 ```
 >python world.py
@@ -354,7 +353,7 @@ None
 ```
 
 
-##7. Modify your PYTHONPATH such that the directory containing ./mytest is now on your PYTHONPATH. Verify this in sys.path.
+##7. Modify your PYTHONPATH such that the directory 
 
 Note error in updating $PATH vs $PYTHONPATH
 
@@ -428,7 +427,7 @@ Would you like to add a new word? summer
 
 Completed
 
-##9. Write a Python script in a different directory (not the one containing mytest).
+##9. Write a Python script in a different directory.
 
 ###a. Verify that you can import mytest and call the three functions func1(), func2(), and func3().
 ###b. Create an object that uses MyClass. Verify that you call the hello() and not_hello() methods.
